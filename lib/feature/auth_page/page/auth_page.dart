@@ -5,8 +5,8 @@ import 'package:test_web_project/core/theme/typography.dart';
 import 'package:test_web_project/core/widgets/app_button_widget.dart';
 import 'package:test_web_project/feature/auth_page/widgets/auth_text_field.dart';
 
-import '../../core/resourses/svg_icons.dart';
-import '../app/routing/route_path.dart';
+import '../../../core/resourses/svg_icons.dart';
+import '../../app/routing/route_path.dart';
 
 class AuthPage extends StatelessWidget {
   static String name = RoutePath.authPage;

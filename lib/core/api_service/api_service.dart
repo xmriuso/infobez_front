@@ -7,7 +7,7 @@ import 'models/all_courses_model.dart';
 class ApiService {
   final Dio _dio = Dio(
     BaseOptions(
-      baseUrl: 'http://192.168.1.82:8000/',
+      baseUrl: 'http://127.0.0.1:8000/',
       connectTimeout: const Duration(milliseconds: 15000),
     ),
   );
