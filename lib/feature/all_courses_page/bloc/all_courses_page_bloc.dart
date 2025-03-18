@@ -2,8 +2,8 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../core/api_service/api_service.dart';
-import '../../../core/api_service/models/all_courses_model.dart';
+import '../../../core/api_service/domain/entities/all_courses_entity.dart';
+import '../../../core/api_service/domain/usecases/project_usecase.dart';
 
 part 'all_courses_page_event.dart';
 
@@ -12,16 +12,16 @@ part 'all_courses_page_state.dart';
 @lazySingleton
 class AllCoursesPageBloc
     extends Bloc<AllCoursesPageEvent, AllCoursesPageState> {
-  final ApiService _apiService;
+  final ProjectUseCase projectUseCase;
 
-  AllCoursesPageBloc(this._apiService) : super(AllCoursesPageInitial()) {
+  AllCoursesPageBloc(this.projectUseCase) : super(AllCoursesPageInitial()) {
     on<LoadAllCoursesEvent>(_onLoadAllCoursesEvent);
   }
 
   Future<void> _onLoadAllCoursesEvent(
       LoadAllCoursesEvent event, Emitter<AllCoursesPageState> emit) async {
     emit(AllCoursesLoadPage());
-    final allCourses = await _apiService.getAllCourses();
+    final allCourses = await projectUseCase.getAllCourses();
     emit(AllCoursesPageLoaded(allCourses: allCourses));
   }
 }

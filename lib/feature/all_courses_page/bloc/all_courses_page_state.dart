@@ -12,7 +12,7 @@ final class AllCoursesPageInitial extends AllCoursesPageState {}
 final class AllCoursesLoadPage extends AllCoursesPageState {}
 
 class AllCoursesPageLoaded extends AllCoursesPageState {
-  final List<AllCoursesModel>? allCourses;
+  final AllCoursesEntity? allCourses;
 
   const AllCoursesPageLoaded({this.allCourses});
 }

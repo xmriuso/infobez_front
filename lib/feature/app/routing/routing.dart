@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:test_web_project/feature/app/init_page/init_page.dart';
 import 'package:test_web_project/feature/app/routing/route_path.dart';
-import 'package:test_web_project/feature/auth_page/page/auth_page.dart';
-import 'package:test_web_project/feature/profile_page/page/profile_page.dart';
 
 import '../../all_courses_page/page/all_courses_page.dart';
+import '../../auth_page/page/auth_page.dart';
 import '../../favourites_courses_page/page/favourites_courses_page.dart';
+import '../../profile_page/page/profile_page.dart';
 import 'custom_navigation_bar.dart';
 
 final GlobalKey<NavigatorState> _allCoursesKey = GlobalKey<NavigatorState>();
