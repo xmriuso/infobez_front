@@ -5,6 +5,7 @@ import 'package:test_web_project/feature/app/routing/route_path.dart';
 
 import '../../all_courses_page/page/all_courses_page.dart';
 import '../../auth_page/page/auth_page.dart';
+import '../../detail_course_page/page/detail_course_page.dart';
 import '../../favourites_courses_page/page/favourites_courses_page.dart';
 import '../../profile_page/page/profile_page.dart';
 import 'custom_navigation_bar.dart';
@@ -19,9 +20,16 @@ final List<StatefulShellBranch> _bottomNavBranches = <StatefulShellBranch>[
     restorationScopeId: 'all_courses',
     routes: [
       GoRoute(
-        path: RoutePath.allCoursesPage,
-        builder: (context, state) => AllCoursesPage(),
-      ),
+          path: RoutePath.allCoursesPage,
+          name: RoutePath.allCoursesPage,
+          builder: (context, state) => AllCoursesPage(),
+          routes: [
+            GoRoute(
+              path: RoutePath.detailCoursePage,
+              name: RoutePath.detailCoursePage,
+              builder: (context, state) => DetailCoursePage(),
+            ),
+          ]),
     ],
   ),
   StatefulShellBranch(

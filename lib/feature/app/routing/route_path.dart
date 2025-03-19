@@ -5,4 +5,5 @@ abstract class RoutePath {
   static const profilePage = '/profilePage';
   static const favouritesCoursesPage = '/favouritesCoursesPage';
   static const allCoursesPage = '/allCoursesPage';
+  static const detailCoursePage = 'detailCoursePage';
 }
