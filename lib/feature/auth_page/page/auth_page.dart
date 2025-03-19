@@ -8,11 +8,18 @@ import 'package:test_web_project/feature/auth_page/widgets/auth_text_field.dart'
 import '../../../core/resourses/svg_icons.dart';
 import '../../app/routing/route_path.dart';
 
-class AuthPage extends StatelessWidget {
+class AuthPage extends StatefulWidget {
   static String name = RoutePath.authPage;
 
   const AuthPage({super.key});
 
+  @override
+  State<AuthPage> createState() => _AuthPageState();
+}
+
+class _AuthPageState extends State<AuthPage> {
+  final TextEditingController loginController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,11 +55,13 @@ class AuthPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 35),
                   AuthTextField(
+                    controller: loginController,
                     hintText: 'Email',
                     icon: SvgIcons.iconUser,
                   ),
                   const SizedBox(height: 35),
                   AuthTextField(
+                    controller: passwordController,
                     hintText: 'Password',
                     icon: SvgIcons.iconLockLocked,
                   ),
@@ -60,7 +69,10 @@ class AuthPage extends StatelessWidget {
                   AppButtonWidget(
                     name: 'Login',
                     onTap: () {
-                      context.go(RoutePath.allCoursesPage);
+                      if (loginController.text.isNotEmpty &&
+                          passwordController.text.isNotEmpty) {
+                        context.go(RoutePath.allCoursesPage);
+                      }
                     },
                   ),
                 ],

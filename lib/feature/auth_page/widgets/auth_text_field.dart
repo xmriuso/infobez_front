@@ -7,11 +7,13 @@ import '../../../core/theme/typography.dart';
 class AuthTextField extends StatelessWidget {
   final String hintText;
   final String? icon;
+  final TextEditingController? controller;
 
   const AuthTextField({
     super.key,
     required this.hintText,
     this.icon,
+    this.controller,
   });
 
   @override
@@ -32,6 +34,7 @@ class AuthTextField extends StatelessWidget {
           children: [
             Expanded(
               child: TextField(
+                controller: controller,
                 style: AppTypography.font18RegularZillaSlab.copyWith(
                   color: AppColors.white,
                   fontWeight: FontWeight.w700,

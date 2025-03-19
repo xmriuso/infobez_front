@@ -1,25 +1,34 @@
 {
-    // Используйте IntelliSense, чтобы узнать о возможных атрибутах.
-    // Наведите указатель мыши, чтобы просмотреть описания существующих атрибутов.
-    // Для получения дополнительной информации посетите: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
         {
             "name": "test_web_project",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+            "args": [
+                "-d", "chrome",  // Запуск в браузере Chrome
+                "--web-browser-flag=--disable-web-security"  // Отключение безопасности браузера
+            ]
         },
         {
             "name": "test_web_project (profile mode)",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "profile"
+            "flutterMode": "profile",
+            "args": [
+                "-d", "chrome",  // Запуск в браузере Chrome
+                "--web-browser-flag=--disable-web-security"  // Отключение безопасности браузера
+            ]
         },
         {
             "name": "test_web_project (release mode)",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "release"
+            "flutterMode": "release",
+            "args": [
+                "-d", "chrome",  // Запуск в браузере Chrome
+                "--web-browser-flag=--disable-web-security"  // Отключение безопасности браузера
+            ]
         }
     ]
 }

@@ -21,7 +21,7 @@ class _AllCoursesPageState extends State<AllCoursesPage> {
   }
 
   final String imageUrl =
-      'https://i.pinimg.com/originals/e7/10/3c/e7103c871cb38f0d5bf00027ea43871d.jpg';
+      'https://i.pinimg.com/736x/f1/4f/d9/f14fd9f2408fc8e6135b921e551baaac.jpg';
 
   final String title = 'Курс';
 
