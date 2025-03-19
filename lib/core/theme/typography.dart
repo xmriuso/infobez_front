@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 abstract class AppTypography {
+  static var titleSmall;
+
+  static var bodySmall;
+
   static TextStyle _zillaSlab(
           {FontWeight? fontWeight,
           double? fontSize,

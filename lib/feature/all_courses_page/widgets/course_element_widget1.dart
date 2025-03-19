@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart'; 
 import 'package:test_web_project/core/theme/typography.dart';
 
-class CourseElementWidget extends StatefulWidget {
+class CourseElementWidget1 extends StatefulWidget {
   final String title;
   final String description;
   final String imageUrl;
 
-  const CourseElementWidget({
+  const CourseElementWidget1({
     super.key,
     required this.title,
     required this.description,
@@ -17,7 +17,7 @@ class CourseElementWidget extends StatefulWidget {
   _CourseElementWidgetState createState() => _CourseElementWidgetState();
 }
 
-class _CourseElementWidgetState extends State<CourseElementWidget> {
+class _CourseElementWidgetState extends State<CourseElementWidget1> {
   bool isFavorite = false; // Состояние для сердечка
 
   @override
@@ -58,7 +58,7 @@ class _CourseElementWidgetState extends State<CourseElementWidget> {
             ),
             onPressed: () {
               setState(() {
-                isFavorite = !isFavorite; 
+                isFavorite = !isFavorite; // Меняем состояние на противоположное
               });
             },
           ),
