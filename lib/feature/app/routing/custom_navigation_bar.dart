@@ -60,7 +60,6 @@ class CustomNavigationBar extends StatelessWidget {
                   },
                 ),
                 const Spacer(),
-                // Новая кнопка NavIcon с выпадающим меню
                 NavIconButton(),
               ],
             ),
@@ -72,7 +71,6 @@ class CustomNavigationBar extends StatelessWidget {
   }
 }
 
-// Виджет для кнопки NavIcon (три полоски + выпадающее меню)
 class NavIconButton extends StatefulWidget {
   @override
   _NavIconButtonState createState() => _NavIconButtonState();

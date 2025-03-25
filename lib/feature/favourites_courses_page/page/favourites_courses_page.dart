@@ -24,7 +24,7 @@ class _FavouritesCoursesPageState extends State<FavouritesCoursesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Мои курсы")),
+      appBar: null,
       body: ListView.builder(
         itemCount: FavoritesManager.favoriteCourses.length,
         itemBuilder: (context, index) {
