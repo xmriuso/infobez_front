@@ -6,6 +6,8 @@ abstract class AppTypography {
 
   static var bodySmall;
 
+  static var font14Regular;
+
   static TextStyle _zillaSlab(
           {FontWeight? fontWeight,
           double? fontSize,

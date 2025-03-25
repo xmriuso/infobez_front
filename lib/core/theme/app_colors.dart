@@ -16,6 +16,9 @@ abstract class AppColors {
   static const Color loginGradient4 = Color(0xFF6484F4);
   static const Color loginGradient5 = Color(0xFF6484F4);
   static const Color pink100 = Color(0xFFFCF1FD);
+  static const Color PINK101 = Color(0xFFBA2A92);
+
+  static var green;
 
 
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:test_web_project/core/theme/typography.dart';
+import 'package:test_web_project/feature/favourites_courses_page/page/favourites_courses_page.dart';
 
 class CourseElementWidget extends StatefulWidget {
   final String title;
@@ -21,7 +22,13 @@ class CourseElementWidget extends StatefulWidget {
 }
 
 class _CourseElementWidgetState extends State<CourseElementWidget> {
-  bool isFavorite = false; // Состояние для сердечка
+  bool get isFavorite => FavoritesManager.favoriteCourses.any((course) => course['title'] == widget.title);
+
+  void toggleFavorite() {
+    setState(() {
+      FavoritesManager.toggleFavorite(widget.title, widget.description, widget.imageUrl);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,8 +42,7 @@ class _CourseElementWidgetState extends State<CourseElementWidget> {
               widget.imageUrl,
               fit: BoxFit.fitHeight,
               width: double.infinity,
-              loadingBuilder: (BuildContext context, Widget child,
-                  ImageChunkEvent? loadingProgress) {
+              loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
                 if (loadingProgress == null) {
                   return child;
                 } else {
@@ -45,9 +51,7 @@ class _CourseElementWidgetState extends State<CourseElementWidget> {
                     highlightColor: Colors.blue,
                     child: AspectRatio(
                       aspectRatio: 1,
-                      child: Container(
-                        color: Colors.grey,
-                      ),
+                      child: Container(color: Colors.grey),
                     ),
                   );
                 }
@@ -69,29 +73,18 @@ class _CourseElementWidgetState extends State<CourseElementWidget> {
                         color: isFavorite ? Colors.red : Colors.white,
                         size: 24,
                       ),
-                      onPressed: () {
-                        setState(() {
-                          isFavorite = !isFavorite;
-                        });
-                      },
+                      onPressed: toggleFavorite,
                     ),
                   ],
                 ),
               ),
-              Expanded(
-                flex: 2,
-                child: SizedBox(),
-              ),
+              Expanded(flex: 2, child: SizedBox()),
               Expanded(
                 flex: 1,
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [Colors.purple, Colors.pink],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
+                    gradient: LinearGradient(colors: [Colors.purple, Colors.pink], begin: Alignment.topLeft, end: Alignment.bottomRight),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Column(
@@ -100,8 +93,7 @@ class _CourseElementWidgetState extends State<CourseElementWidget> {
                     children: [
                       FittedBox(
                         fit: BoxFit.fill,
-                        child: Text("Выполнено 0 из 5",
-                            style: TextStyle(color: Colors.white)),
+                        child: Text("Выполнено 0 из 5", style: TextStyle(color: Colors.white)),
                       ),
                       SizedBox(height: 4),
                       Expanded(
@@ -109,15 +101,11 @@ class _CourseElementWidgetState extends State<CourseElementWidget> {
                           onPressed: widget.onTap,
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.pink,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20)),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                           ),
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text("Начать"),
-                              Icon(Icons.arrow_forward, size: 16),
-                            ],
+                            children: [Text("Начать"), Icon(Icons.arrow_forward, size: 16)],
                           ),
                         ),
                       ),

@@ -21,7 +21,7 @@ class _AllCoursesPageState extends State<AllCoursesPage> {
   }
 
   final String imageUrl =
-      'https://i.pinimg.com/736x/f1/4f/d9/f14fd9f2408fc8e6135b921e551baaac.jpg';
+      'https://s3-alpha-sig.figma.com/img/dc74/8edd/3fd2beaa0bdb4230ca842308835f8cfb?Expires=1743379200&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=fQ-e8SA9WvZhhwQE8zkrqofBW3AYmFCrOg89OYBFUm39XPXH9RlcJtV3TX7owRH982icC5tMiw12qCJqEnvoLQ2Vy~Z~6pwVN-MOj3xfds2pWdGrEcinkb0b5JudgDpZoOcuN5yRYhrvGRfbe0ntHnYviEnc5Lxm0XumqDFzhCAWlIUkCrhGiykVz576AZKgVcjtjTFMlnrc5KlpwEtnTrD2HC2ETqyENtjMAVyqzv3XK6GTqlrk4NTok-yT-9VxpVM9iEFPVAyVcAbNPqSIzqbrhctxA5Fi04gOSbWcsfH7b06mZFwZ0WLc0n4JC6O4W11LOy9TTiREbUtRv3bWTQ__';
 
   final String title = 'Курс';
 
@@ -41,7 +41,7 @@ class _AllCoursesPageState extends State<AllCoursesPage> {
             crossAxisSpacing: 20,
             mainAxisSpacing: 30,
             children: List.generate(
-              60,
+              30,
               (index) {
                 return SizedBox(
                   height: 200,

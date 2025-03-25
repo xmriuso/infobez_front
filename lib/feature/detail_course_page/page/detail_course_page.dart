@@ -70,7 +70,7 @@ class _DetailCoursePage extends State<DetailCoursePage> {
                                   borderRadius: BorderRadius.only(
                                       topLeft: Radius.circular(8),
                                       topRight: Radius.circular(8)),
-                                  color: AppColors.loginGradient3),
+                                  color: AppColors.PINK101),
                               child: Center(
                                 child: Text(
                                   'День ${index + 1}',

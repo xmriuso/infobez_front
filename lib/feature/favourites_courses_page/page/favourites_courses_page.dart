@@ -1,19 +1,41 @@
 import 'package:flutter/material.dart';
 
-class FavouritesCoursesPage extends StatelessWidget {
+class FavoritesManager {
+  static final List<Map<String, String>> favoriteCourses = [];
+
+  static void toggleFavorite(String title, String description, String imageUrl) {
+    final existingIndex = favoriteCourses.indexWhere((course) => course['title'] == title);
+    if (existingIndex >= 0) {
+      favoriteCourses.removeAt(existingIndex);
+    } else {
+      favoriteCourses.add({'title': title, 'description': description, 'imageUrl': imageUrl});
+    }
+  }
+}
+
+class FavouritesCoursesPage extends StatefulWidget {
   const FavouritesCoursesPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Card1();
-  }
+  _FavouritesCoursesPageState createState() => _FavouritesCoursesPageState();
 }
-class Card1 extends StatelessWidget {
-  const Card1({super.key});
 
+class _FavouritesCoursesPageState extends State<FavouritesCoursesPage> {
   @override
   Widget build(BuildContext context) {
-    return Container(child: Image.network("https://sun9-68.userapi.com/wBdHyW8aO_13zv5iSnlSqhdFloeYTfYRN2jgYg/h73em_Sfv0E.jpg"),);
-
+    return Scaffold(
+      appBar: AppBar(title: Text("Мои курсы")),
+      body: ListView.builder(
+        itemCount: FavoritesManager.favoriteCourses.length,
+        itemBuilder: (context, index) {
+          final course = FavoritesManager.favoriteCourses[index];
+          return ListTile(
+            leading: Image.network(course['imageUrl']!, width: 50, height: 50, fit: BoxFit.cover),
+            title: Text(course['title']!),
+            subtitle: Text(course['description']!),
+          );
+        },
+      ),
+    );
   }
 }

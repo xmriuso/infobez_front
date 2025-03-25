@@ -30,7 +30,7 @@ class CustomNavigationBar extends StatelessWidget {
                 colors: [
                   AppColors.blue,
                   AppColors.pink,
-                  AppColors.yellow,
+                  AppColors.loginGradient3,
                 ],
               ),
             ),
