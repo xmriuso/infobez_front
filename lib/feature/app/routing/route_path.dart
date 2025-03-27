@@ -6,4 +6,5 @@ abstract class RoutePath {
   static const favouritesCoursesPage = '/favouritesCoursesPage';
   static const allCoursesPage = '/allCoursesPage';
   static const detailCoursePage = 'detailCoursePage';
+  static const detailModulePage = 'detailModulePage';
 }
