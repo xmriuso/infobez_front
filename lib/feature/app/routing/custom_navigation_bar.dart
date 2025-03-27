@@ -129,7 +129,7 @@ class _NavIconButtonState extends State<NavIconButton> {
                         onPressed: () => _navigateToProfile(context),
                       ),
                       _buildMenuButton(
-                        icon: Icons.shopping_cart,
+                        icon: Icons.delete,
                         label: 'Корзина',
                         onPressed: () => null,
                       ),
