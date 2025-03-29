@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:test_web_project/core/api_service/data/api/api.dart';
+import 'package:test_web_project/core/api_service/data/models/detail_course_model.dart';
+import 'package:test_web_project/core/api_service/data/models/modules_by_id_model.dart';
 
 import '../../models/all_courses_model.dart';
 
@@ -37,6 +39,44 @@ class ApiService implements Api {
       );
       if (response.data != null) {
         return AllCoursesModel.fromJson(response.data);
+      }
+      return null;
+    } catch (e) {
+      print('❌ Ошибка GET: $e');
+      return null;
+    }
+  }
+
+  @override
+  Future<DetailCourseModel?> getDetailCourse({
+    required int idCourse,
+  }) async {
+    try {
+      final response = await _dio.get(
+        'courses/getById/$idCourse',
+        // queryParameters: params,
+      );
+      if (response.data != null) {
+        return DetailCourseModel.fromJson(response.data);
+      }
+      return null;
+    } catch (e) {
+      print('❌ Ошибка GET: $e');
+      return null;
+    }
+  }
+
+  @override
+  Future<AllLessonsModel?> getModulesByCourceId({
+    required int idCourse,
+  }) async {
+    try {
+      final response = await _dio.get(
+        'modules/getPageByCourseAndDescription/$idCourse',
+        // queryParameters: params,
+      );
+      if (response.data != null) {
+        return AllLessonsModel.fromJson(response.data);
       }
       return null;
     } catch (e) {

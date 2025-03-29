@@ -1,4 +1,7 @@
 import 'package:injectable/injectable.dart';
+import 'package:test_web_project/core/api_service/data/models/detail_course_model.dart';
+import 'package:test_web_project/core/api_service/domain/entities/detail_course_entity.dart';
+import 'package:test_web_project/core/api_service/domain/entities/modules_by_id_entity.dart';
 import '../../domain/entities/all_courses_entity.dart';
 import '../../domain/repository/project_repository.dart';
 import '../api/service/api_service.dart';
@@ -19,6 +22,24 @@ class ProjectRepositoryImpl extends ProjectRepository {
       numberPage: numberPage,
       quantity: quantity,
       search: search,
+    );
+  }
+
+  @override
+  Future<DetailCourseEntity?> getDetailCourse({
+    required int idCourse,
+  }) async {
+    return await apiService.getDetailCourse(
+      idCourse: idCourse,
+    );
+  }
+
+  @override
+  Future<AllLessonsEntity?> getModulesByCourceId({
+    required int idCourse,
+  }) async {
+    return await apiService.getModulesByCourceId(
+      idCourse: idCourse,
     );
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:test_web_project/feature/all_courses_page/widgets/course_element_widget.dart';
 import 'package:test_web_project/feature/app/routing/route_path.dart';
+import 'package:test_web_project/feature/detail_course_page/bloc/detail_course_page_bloc.dart';
 
 import '../bloc/all_courses_page_bloc.dart';
 
@@ -51,6 +52,9 @@ class _AllCoursesPageState extends State<AllCoursesPage> {
                     description: '$description ${index + 1}',
                     onTap: () {
                       context.goNamed(RoutePath.detailCoursePage);
+                      context.read<DetailCoursePageBloc>().add(
+                            LoadDetailCourseEvent(courseId: 1),
+                          );
                     },
                   ),
                 );

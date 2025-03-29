@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:test_web_project/core/theme/app_colors.dart';
 import 'package:test_web_project/core/theme/typography.dart';
 import 'package:test_web_project/feature/all_courses_page/widgets/course_element_widget.dart';
 import 'package:test_web_project/feature/app/routing/route_path.dart';
+
+import '../bloc/detail_course_page_bloc.dart';
 
 class DetailCoursePage extends StatefulWidget {
   const DetailCoursePage({super.key});
@@ -30,100 +33,118 @@ class _DetailCoursePage extends State<DetailCoursePage> {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    return Column(
-      children: [
-        Text(
-          "Стройная  2.0",
-          style: AppTypography.font28RegularUnbounded.copyWith(
-            fontWeight: FontWeight.w700,
-            color: AppColors.black,
-          ),
-        ),
-        Expanded(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 50, vertical: 50),
-            child: Container(
-              padding: EdgeInsets.all(30),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(48),
-                  color: AppColors.pink100),
-              child: GridView.count(
-                childAspectRatio: 121 / 80,
-                crossAxisCount: width ~/ itemWidth,
-                crossAxisSpacing: 44,
-                mainAxisSpacing: 62,
-                children: List.generate(
-                  60,
-                  (index) {
-                    //Todo: вынести в отдельный виджет
-                    return GestureDetector(
-                      onTap: () {
-                        context.goNamed(RoutePath.detailModulePage);
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(10),
-                              topRight: Radius.circular(10),
-                              bottomLeft: Radius.circular(8),
-                              bottomRight: Radius.circular(8)),
-                          border: Border.all(
-                              color: AppColors.loginGradient3, width: 1.2),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Flexible(
-                              flex: 1,
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(8),
-                                        topRight: Radius.circular(8)),
-                                    color: AppColors.PINK101),
-                                child: Center(
-                                  child: Text(
-                                    'День ${index + 1}',
-                                    style: AppTypography.font12RegularZillaSlab
-                                        .copyWith(color: AppColors.white),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Flexible(
-                              flex: 2,
-                              child: Padding(
-                                padding: EdgeInsets.all(16),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'День ${index + 1}',
-                                      style: AppTypography
-                                          .font12RegularZillaSlab
-                                          .copyWith(color: AppColors.black),
-                                    ),
-                                    Text(
-                                      'День ${index + 1}',
-                                      style: AppTypography
-                                          .font12RegularZillaSlab
-                                          .copyWith(color: AppColors.black),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
+    return BlocBuilder<DetailCoursePageBloc, DetailCoursePageState>(
+      builder: (context, state) {
+        if (state is DetailCourseLoadState) {
+          return Text('Загрузка');
+        }
+        if (state is DetailCourseErrorState) {
+          return Text('Ошибка');
+        }
+        if (state is AllCoursesPageLoadedState) {
+          return Column(
+            children: [
+              Text(
+                "Стройная  2.0",
+                style: AppTypography.font28RegularUnbounded.copyWith(
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.black,
                 ),
               ),
-            ),
-          ),
-        ),
-      ],
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 50, vertical: 50),
+                  child: Container(
+                    padding: EdgeInsets.all(30),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(48),
+                        color: AppColors.pink100),
+                    child: GridView.count(
+                      childAspectRatio: 121 / 80,
+                      crossAxisCount: width ~/ itemWidth,
+                      crossAxisSpacing: 44,
+                      mainAxisSpacing: 62,
+                      children: List.generate(
+                        state.modulesByCourseId?.data?.length ?? 0,
+                        (index) {
+                          //Todo: вынести в отдельный виджет
+                          return GestureDetector(
+                            onTap: () {
+                              context.goNamed(RoutePath.detailModulePage);
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(10),
+                                    topRight: Radius.circular(10),
+                                    bottomLeft: Radius.circular(8),
+                                    bottomRight: Radius.circular(8)),
+                                border: Border.all(
+                                    color: AppColors.loginGradient3,
+                                    width: 1.2),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Flexible(
+                                    flex: 1,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(8),
+                                              topRight: Radius.circular(8)),
+                                          color: AppColors.PINK101),
+                                      child: Center(
+                                        child: Text(
+                                          '${state.modulesByCourseId!.data![index].title ?? ''}',
+                                          style: AppTypography
+                                              .font12RegularZillaSlab
+                                              .copyWith(color: AppColors.white),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Flexible(
+                                    flex: 2,
+                                    child: Padding(
+                                      padding: EdgeInsets.all(16),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'День ${index + 1}',
+                                            style: AppTypography
+                                                .font12RegularZillaSlab
+                                                .copyWith(
+                                                    color: AppColors.black),
+                                          ),
+                                          Text(
+                                            'День ${index + 1}',
+                                            style: AppTypography
+                                                .font12RegularZillaSlab
+                                                .copyWith(
+                                                    color: AppColors.black),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          );
+        }
+        return SizedBox();
+      },
     );
   }
 }

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:test_web_project/core/theme/app_colors.dart';
 import 'package:test_web_project/core/resourses/images.dart';
+import 'package:test_web_project/core/theme/app_colors.dart';
 import 'package:test_web_project/feature/app/routing/route_path.dart';
 
 import '../../../core/theme/typography.dart';
-import 'package:test_web_project/feature/app/routing/routing.dart';
 
 class CustomNavigationBar extends StatelessWidget {
   final StatefulNavigationShell child;
@@ -90,7 +89,8 @@ class _NavIconButtonState extends State<NavIconButton> {
   }
 
   void _showMenu() {
-    final RenderBox renderBox = _buttonKey.currentContext!.findRenderObject() as RenderBox;
+    final RenderBox renderBox =
+        _buttonKey.currentContext!.findRenderObject() as RenderBox;
     final buttonSize = renderBox.size;
     final buttonOffset = renderBox.localToGlobal(Offset.zero);
 
@@ -130,7 +130,7 @@ class _NavIconButtonState extends State<NavIconButton> {
                       ),
                       _buildMenuButton(
                         icon: Icons.delete,
-                        label: 'Корзина',
+                        label: 'Корз ина',
                         onPressed: () => null,
                       ),
                       _buildMenuButton(
@@ -170,7 +170,8 @@ class _NavIconButtonState extends State<NavIconButton> {
       ),
       child: Row(
         children: [
-          Icon(icon, size: 20, color: isDestructive ? Colors.red : Colors.black54),
+          Icon(icon,
+              size: 20, color: isDestructive ? Colors.red : Colors.black54),
           SizedBox(width: 12),
           Text(label, style: TextStyle(fontSize: 14)),
         ],
@@ -182,7 +183,6 @@ class _NavIconButtonState extends State<NavIconButton> {
     // Навигация к профилю
     context.go(RoutePath.profilePage);
   }
-
 
   void _logout(BuildContext context) {
     // Логика выхода
