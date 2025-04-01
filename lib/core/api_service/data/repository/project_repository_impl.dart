@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:injectable/injectable.dart';
 import 'package:test_web_project/core/api_service/data/models/detail_course_model.dart';
 import 'package:test_web_project/core/api_service/domain/entities/detail_course_entity.dart';
@@ -41,5 +43,13 @@ class ProjectRepositoryImpl extends ProjectRepository {
     return await apiService.getModulesByCourceId(
       idCourse: idCourse,
     );
+  }
+
+  @override
+  Future<Uint8List?> getImageFromString({
+    required String image,
+  }) async {
+    final result = await apiService.getImageFromString(image: image);
+    return result;
   }
 }

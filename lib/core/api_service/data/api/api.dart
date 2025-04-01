@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:test_web_project/core/api_service/data/models/detail_course_model.dart';
 import 'package:test_web_project/core/api_service/data/models/modules_by_id_model.dart';
 
@@ -17,4 +19,10 @@ abstract class Api {
   Future<AllLessonsModel?> getModulesByCourceId({
     required int idCourse,
   });
+
+  Future<Uint8List?> getImageFromString({
+    required String image,
+  });
+
+
 }

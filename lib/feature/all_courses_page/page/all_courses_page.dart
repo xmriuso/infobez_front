@@ -32,36 +32,51 @@ class _AllCoursesPageState extends State<AllCoursesPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AllCoursesPageBloc, AllCoursesPageState>(
+    return BlocConsumer<AllCoursesPageBloc, AllCoursesPageState>(
+      listenWhen: (lastContext, context) {
+        return lastContext is! AllCoursesPageLoaded;
+      },
+      listener: (context, state) {
+        context.read<AllCoursesPageBloc>().add(LoadAllCoursesImagesEvent());
+      },
       builder: (context, state) {
         final width = MediaQuery.of(context).size.width;
-        return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16),
-          child: GridView.count(
-            crossAxisCount: width ~/ itemWidth,
-            crossAxisSpacing: 20,
-            mainAxisSpacing: 30,
-            children: List.generate(
-              30,
-              (index) {
-                return SizedBox(
-                  height: 200,
-                  child: CourseElementWidget(
-                    imageUrl: imageUrl,
-                    title: '$title ${index + 1}',
-                    description: '$description ${index + 1}',
-                    onTap: () {
-                      context.goNamed(RoutePath.detailCoursePage);
-                      context.read<DetailCoursePageBloc>().add(
-                            LoadDetailCourseEvent(courseId: 1),
-                          );
-                    },
-                  ),
-                );
-              },
+        if (state is AllCoursesPageLoaded) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16),
+            child: GridView.count(
+              crossAxisCount: width ~/ itemWidth,
+              crossAxisSpacing: 20,
+              mainAxisSpacing: 30,
+              children: List.generate(
+                state.allCourses?.data?.length ?? 0,
+                (index) {
+                  return SizedBox(
+                    height: 200,
+                    child: CourseElementWidget(
+                      imageUrl: state.imagesFiles[index],
+                      title: '$title ${index + 1}',
+                      description: '$description ${index + 1}',
+                      onTap: () {
+                        if (state.allCourses!.data![index].id != null) {
+                          context.goNamed(RoutePath.detailCoursePage);
+                          context.read<DetailCoursePageBloc>().add(
+                                LoadDetailCourseEvent(
+                                    courseId:
+                                        state.allCourses!.data![index].id!),
+                              );
+                        }
+                      },
+                    ),
+                  );
+                },
+              ),
             ),
-          ),
-        );
+          );
+        }
+
+        ///Todo: Сделать загрузку
+        return Text('Загрузка...');
       },
     );
   }
