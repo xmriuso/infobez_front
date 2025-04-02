@@ -33,7 +33,13 @@ class _DetailCoursePage extends State<DetailCoursePage> {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    return BlocBuilder<DetailCoursePageBloc, DetailCoursePageState>(
+    return BlocConsumer<DetailCoursePageBloc, DetailCoursePageState>(
+      listenWhen: (lastContext, context) {
+        return lastContext is! AllCoursesPageLoadedState;
+      },
+      listener: (context, state) {
+        context.read<DetailCoursePageBloc>().add(LoadImagesEvent());
+      },
       builder: (context, state) {
         if (state is DetailCourseLoadState) {
           return Text('Загрузка');
@@ -68,71 +74,85 @@ class _DetailCoursePage extends State<DetailCoursePage> {
                         state.modulesByCourseId?.data?.length ?? 0,
                         (index) {
                           //Todo: вынести в отдельный виджет
+                          final module = state.modulesByCourseId!.data![index];
+                          final image = state.imagesFiles[index];
                           return GestureDetector(
                             onTap: () {
                               context.goNamed(RoutePath.detailModulePage);
                             },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(10),
-                                    topRight: Radius.circular(10),
-                                    bottomLeft: Radius.circular(8),
-                                    bottomRight: Radius.circular(8)),
-                                border: Border.all(
-                                    color: AppColors.loginGradient3,
-                                    width: 1.2),
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Flexible(
-                                    flex: 1,
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(8),
-                                              topRight: Radius.circular(8)),
-                                          color: AppColors.PINK101),
-                                      child: Center(
-                                        child: Text(
-                                          '${state.modulesByCourseId!.data![index].title ?? ''}',
-                                          style: AppTypography
-                                              .font12RegularZillaSlab
-                                              .copyWith(color: AppColors.white),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Flexible(
-                                    flex: 2,
-                                    child: Padding(
-                                      padding: EdgeInsets.all(16),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            'День ${index + 1}',
-                                            style: AppTypography
-                                                .font12RegularZillaSlab
-                                                .copyWith(
-                                                    color: AppColors.black),
-                                          ),
-                                          Text(
-                                            'День ${index + 1}',
-                                            style: AppTypography
-                                                .font12RegularZillaSlab
-                                                .copyWith(
-                                                    color: AppColors.black),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
+                            child: image != null
+                                ? Image.memory(
+                                    image,
+                                    fit: BoxFit.cover,
+                                  )
+                                : Text('Загрузка...'),
+                            // Column(
+                            //   children: [
+                            //     Expanded(
+                            //       child: Container(
+                            //         decoration: BoxDecoration(
+                            //           borderRadius: BorderRadius.only(
+                            //               topLeft: Radius.circular(10),
+                            //               topRight: Radius.circular(10),
+                            //               bottomLeft: Radius.circular(8),
+                            //               bottomRight: Radius.circular(8)),
+                            //           border: Border.all(
+                            //               color: AppColors.loginGradient3,
+                            //               width: 1.2),
+                            //         ),
+                            //         child: Column(
+                            //           crossAxisAlignment: CrossAxisAlignment.start,
+                            //           children: [
+                            //             Flexible(
+                            //               flex: 1,
+                            //               child: Container(
+                            //                 decoration: BoxDecoration(
+                            //                     borderRadius: BorderRadius.only(
+                            //                         topLeft: Radius.circular(8),
+                            //                         topRight: Radius.circular(8)),
+                            //                     color: AppColors.PINK101),
+                            //                 child: Center(
+                            //                   child: Text(
+                            //                     '${module.title ?? ''}',
+                            //                     style: AppTypography
+                            //                         .font12RegularZillaSlab
+                            //                         .copyWith(color: AppColors.white),
+                            //                   ),
+                            //                 ),
+                            //               ),
+                            //             ),
+                            //             Flexible(
+                            //               flex: 2,
+                            //               child: Padding(
+                            //                 padding: EdgeInsets.all(16),
+                            //                 child: Column(
+                            //                   crossAxisAlignment:
+                            //                       CrossAxisAlignment.start,
+                            //                   children: [
+                            //                     Text(
+                            //                       'День ${index + 1}',
+                            //                       style: AppTypography
+                            //                           .font12RegularZillaSlab
+                            //                           .copyWith(
+                            //                               color: AppColors.black),
+                            //                     ),
+                            //                     Text(
+                            //                       'День ${index + 1}',
+                            //                       style: AppTypography
+                            //                           .font12RegularZillaSlab
+                            //                           .copyWith(
+                            //                               color: AppColors.black),
+                            //                     ),
+                            //                   ],
+                            //                 ),
+                            //               ),
+                            //             ),
+                            //           ],
+                            //         ),
+                            //       ),
+                            //     ),
+                            //   ],
+                            // ),
                           );
                         },
                       ),

@@ -5,6 +5,8 @@ import 'package:test_web_project/core/api_service/data/models/detail_course_mode
 import 'package:test_web_project/core/api_service/data/models/modules_by_id_model.dart';
 
 import '../../models/all_courses_model.dart';
+import 'dart:typed_data';
+import 'dart:html' as html; // Используем dart:html для работы с DOM
 
 @lazySingleton
 class ApiService implements Api {
@@ -34,8 +36,12 @@ class ApiService implements Api {
   }) async {
     try {
       final response = await _dio.get(
-        'courses/getPageByDescription/${numberPage ?? 10}/${quantity ?? 10}',
-        // queryParameters: params,
+        'courses/getPageByDescription/',
+        queryParameters: {
+          if (numberPage != null) 'number_page': numberPage,
+          if (quantity != null)'quantity_on_page': quantity,
+          if (search != null)'description': search,
+        },
       );
       if (response.data != null) {
         return AllCoursesModel.fromJson(response.data);
@@ -79,6 +85,32 @@ class ApiService implements Api {
         return AllLessonsModel.fromJson(response.data);
       }
       return null;
+    } catch (e) {
+      print('❌ Ошибка GET: $e');
+      return null;
+    }
+  }
+
+  @override
+  Future<Uint8List?> getImageFromString({
+    required String image,
+  }) async {
+    try {
+      final response = await _dio.get(
+        'images/getByName/$image',
+        options: Options(
+            responseType: ResponseType.bytes), // Указываем, что ожидаем байты
+      );
+
+      if (response.statusCode == 200) {
+        // Получаем байты изображения из поля 'data'
+        Uint8List bytes = response
+            .data; // response.data теперь будет типа Uint8List, если указан ResponseType.bytes
+        return bytes;
+      } else {
+        print('❌ Ошибка: Статус не 200. Код: ${response.statusCode}');
+        return null;
+      }
     } catch (e) {
       print('❌ Ошибка GET: $e');
       return null;

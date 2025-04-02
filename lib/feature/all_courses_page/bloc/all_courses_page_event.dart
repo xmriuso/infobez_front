@@ -10,3 +10,7 @@ sealed class AllCoursesPageEvent extends Equatable {
 class LoadAllCoursesEvent extends AllCoursesPageEvent {
   const LoadAllCoursesEvent();
 }
+
+class LoadAllCoursesImagesEvent extends AllCoursesPageEvent {
+  const LoadAllCoursesImagesEvent();
+}

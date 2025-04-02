@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:test_web_project/core/api_service/domain/entities/detail_course_entity.dart';
 import 'package:test_web_project/core/api_service/domain/entities/modules_by_id_entity.dart';
 
@@ -16,5 +18,9 @@ abstract class ProjectRepository {
 
   Future<AllLessonsEntity?> getModulesByCourceId({
     required int idCourse,
+  });
+
+  Future<Uint8List?> getImageFromString({
+    required String image,
   });
 }

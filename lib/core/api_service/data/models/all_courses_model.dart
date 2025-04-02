@@ -54,11 +54,14 @@ class CourseModel extends CourseEntity {
     return CourseModel(
       id: json['id'] as int?,
       creatorId: json['creatorId'] as int?,
-      title: json['title'] as String?,
-      description: json['description'] as String?,
-      featuredImage: FeaturedImageModel.fromJson(
-          json['featuredImage'] as Map<String, dynamic>),
-      createdAt: DateTime.parse(json['createdAt'] as String),
+      title: json['title'] as String? ?? '', // Если значение null, возвращаем пустую строку
+      description: json['description'] as String? ?? '', // Если значение null, возвращаем пустую строку
+      featuredImage: json['featuredImage'] != null
+          ? FeaturedImageModel.fromJson(json['featuredImage'] as Map<String, dynamic>)
+          : null, // Проверяем на null перед преобразованием
+      createdAt: json['createdAt'] != null
+          ? DateTime.parse(json['createdAt'] as String)
+          : null, // Проверяем на null перед преобразованием
     );
   }
 

@@ -19,7 +19,7 @@ class _InitPageState extends State<InitPage> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    
+
     _controller = AnimationController(
       duration: const Duration(seconds: 3),
       vsync: this,
@@ -36,7 +36,8 @@ class _InitPageState extends State<InitPage> with TickerProviderStateMixin {
       if (status == AnimationStatus.completed) {
         _onAnimationEnd();
       }
-    });
+    },
+    );
 
     // Градиентная анимация
     _gradientController = AnimationController(
@@ -114,7 +115,10 @@ class _InitPageState extends State<InitPage> with TickerProviderStateMixin {
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                       shadows: [
-                        Shadow(blurRadius: 10, color: Colors.black38, offset: Offset(2, 2))
+                        Shadow(
+                            blurRadius: 10,
+                            color: Colors.black38,
+                            offset: Offset(2, 2))
                       ],
                     ),
                   ),

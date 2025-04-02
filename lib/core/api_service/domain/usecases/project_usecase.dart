@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:test_web_project/core/api_service/domain/entities/modules_by_id_entity.dart';
@@ -28,7 +30,7 @@ class ProjectUseCase {
     return null;
   }
 
-      Future<DetailCourseEntity?> getDetailCourse({
+  Future<DetailCourseEntity?> getDetailCourse({
     required int idCourse,
   }) async {
     try {
@@ -51,5 +53,16 @@ class ProjectUseCase {
     } on DioException catch (e) {}
     return null;
   }
- 
+
+  Future<Uint8List?> getImageFromString({
+    required String image,
+  }) async {
+    try {
+      final result = await projectRepository.getImageFromString(
+        image: image,
+      );
+      return result;
+    } on DioException catch (e) {}
+    return null;
+  }
 }
