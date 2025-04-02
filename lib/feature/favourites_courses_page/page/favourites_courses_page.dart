@@ -4,12 +4,12 @@ class FavoritesManager {
   static final List<Map<String, String>> favoriteCourses = [];
 
   static void toggleFavorite(String title, String description, String imageUrl) {
-    final existingIndex = favoriteCourses.indexWhere((course) => course['title'] == title);
-    if (existingIndex >= 0) {
-      favoriteCourses.removeAt(existingIndex);
-    } else {
-      favoriteCourses.add({'title': title, 'description': description, 'imageUrl': imageUrl});
-    }
+    // final existingIndex = favoriteCourses.indexWhere((course) => course['title'] == title);
+    // if (existingIndex >= 0) {
+    //   favoriteCourses.removeAt(existingIndex);
+    // } else {
+    //   favoriteCourses.add({'title': title, 'description': description, 'imageUrl': imageUrl});
+    // }
   }
 }
 
