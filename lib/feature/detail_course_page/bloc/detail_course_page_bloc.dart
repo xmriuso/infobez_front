@@ -24,7 +24,6 @@ class DetailCoursePageBloc
     on<LoadDetailCourseEvent>(_onLoadDetailCourseEvent);
     on<LikeEvent>(_onLikeEvent);
     on<LoadImagesEvent>(_onLoadImagesEvent);
-    on<LoadImagesEvent>(_onLoadImagesEvent);
   }
 
   Future<void> _onLoadDetailCourseEvent(
