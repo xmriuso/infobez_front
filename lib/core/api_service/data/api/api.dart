@@ -16,7 +16,7 @@ abstract class Api {
     required int idCourse,
   });
 
-  Future<AllLessonsModel?> getModulesByCourceId({
+  Future<AllLessonsModel?> getModulesByCourseId({
     required int idCourse,
   });
 

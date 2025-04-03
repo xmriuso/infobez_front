@@ -73,7 +73,7 @@ class ApiService implements Api {
   }
 
   @override
-  Future<AllLessonsModel?> getModulesByCourceId({
+  Future<AllLessonsModel?> getModulesByCourseId({
     required int idCourse,
   }) async {
     try {

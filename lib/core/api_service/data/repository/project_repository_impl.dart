@@ -40,7 +40,7 @@ class ProjectRepositoryImpl extends ProjectRepository {
   Future<AllLessonsEntity?> getModulesByCourceId({
     required int idCourse,
   }) async {
-    return await apiService.getModulesByCourceId(
+    return await apiService.getModulesByCourseId(
       idCourse: idCourse,
     );
   }

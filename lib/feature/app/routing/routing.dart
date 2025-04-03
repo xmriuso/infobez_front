@@ -33,7 +33,10 @@ final List<StatefulShellBranch> _bottomNavBranches = <StatefulShellBranch>[
               GoRoute(
                 path: RoutePath.detailModulePage,
                 name: RoutePath.detailModulePage,
-                builder: (context, state) => DetailModulePage(),
+                builder: (context, state) {
+                  final courseId = int.parse(state.pathParameters['courseId']!);
+                  return DetailModulePage(courseId: courseId);
+                },
               ),
             ],
           ),
