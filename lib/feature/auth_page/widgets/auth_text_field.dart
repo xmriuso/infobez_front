@@ -35,14 +35,14 @@ class AuthTextField extends StatelessWidget {
             Expanded(
               child: TextField(
                 controller: controller,
-                style: AppTypography.font18RegularZillaSlab.copyWith(
+                style: AppTypography.font12RegularMontserrat.copyWith(
                   color: AppColors.white,
                   fontWeight: FontWeight.w700,
                 ),
                 decoration: InputDecoration(
                   border: InputBorder.none,
                   hintText: hintText,
-                  hintStyle: AppTypography.font18RegularZillaSlab.copyWith(
+                  hintStyle: AppTypography.font18RegularMontserrat.copyWith(
                     color: AppColors.white,
                     fontWeight: FontWeight.w700,
                   ),

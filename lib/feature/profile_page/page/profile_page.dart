@@ -7,7 +7,7 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  @override
+
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
 
-  @override
+
   _ProfilePageState createState() => _ProfilePageState();
 }
 
@@ -28,7 +28,7 @@ class _ProfilePageState extends State<ProfilePage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  @override
+
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
@@ -37,7 +37,7 @@ class _ProfilePageState extends State<ProfilePage> {
             padding: const EdgeInsets.all(20),
             margin: const EdgeInsets.all(20),
             decoration: BoxDecoration(
-              border: Border.all(color: Colors.pinkAccent, width: 2),
+              border: Border.all(color: const Color.fromARGB(255, 44, 172, 226), width: 2),
               borderRadius: BorderRadius.circular(20),
             ),
             width: 350,
@@ -49,7 +49,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 const Center(
                   child: Text(
                     'ЛИЧНЫЙ КАБИНЕТ',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                   ),
                 ),
                 const SizedBox(height: 15),
@@ -90,32 +90,35 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Widget _buildActionButton({
-    required String text,
-    required bool isPrimary,
-    required VoidCallback onPressed,
-  }) {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        backgroundColor: isPrimary ? Colors.pinkAccent : Colors.white,
-        foregroundColor: isPrimary ? Colors.white : Colors.pinkAccent,
-        side: isPrimary ? null : const BorderSide(color: Colors.pinkAccent),
-        padding: const EdgeInsets.symmetric(vertical: 1),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
+ Widget _buildActionButton({
+  required String text,
+  required bool isPrimary,
+  required VoidCallback onPressed,
+}) {
+  return ElevatedButton(
+    style: ElevatedButton.styleFrom(
+      backgroundColor: isPrimary ? const Color.fromARGB(255, 44, 172, 226) : Colors.white,
+      foregroundColor: isPrimary ? Colors.white : const Color.fromARGB(255, 44, 172, 226),
+      side: isPrimary ? null : const BorderSide(color: Color.fromARGB(255, 44, 172, 226)),
+      padding: const EdgeInsets.symmetric(vertical: 12), // Увеличим вертикальное пространство
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
       ),
-      onPressed: onPressed,
-      child: Text(text),
-    );
-  }
+    ),
+    onPressed: onPressed,
+    child: Text(
+      text,
+      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold), // Измените fontSize на нужное значение
+    ),
+  );
+}
 
   Widget _buildProfilePicture() {
     return Stack(
       children: [
         const CircleAvatar(
           radius: 40,
-          backgroundColor: Colors.pinkAccent,
+          backgroundColor: Color.fromARGB(255, 44, 172, 226),
           child: Icon(Icons.camera_alt, color: Colors.white, size: 30),
         ),
         Positioned(
@@ -127,7 +130,11 @@ class _ProfilePageState extends State<ProfilePage> {
               shape: BoxShape.circle,
               color: Colors.white,
             ),
-            child: const Icon(Icons.edit, size: 16, color: Colors.pinkAccent),
+            child: const Icon(Icons.edit,
+
+
+
+size: 16, color: Color.fromARGB(255, 44, 172, 226)),
           ),
         ),
       ],
@@ -145,18 +152,18 @@ class _ProfilePageState extends State<ProfilePage> {
         obscureText: isPassword,
         decoration: InputDecoration(
           labelText: label,
-          labelStyle: const TextStyle(color: Colors.pinkAccent),
+          labelStyle: const TextStyle(color: Color.fromARGB(255, 44, 172, 226)),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20),
-            borderSide: const BorderSide(color: Colors.pinkAccent),
+            borderSide: const BorderSide(color: Color.fromARGB(255, 44, 172, 226)),
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20),
-            borderSide: const BorderSide(color: Colors.pinkAccent),
+            borderSide: const BorderSide(color: Color.fromARGB(255, 44, 172, 226)),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20),
-            borderSide: const BorderSide(color: Colors.deepPurple),
+            borderSide: const BorderSide(color: Color.fromARGB(255, 14, 21, 211)),
           ),
         ),
       ),

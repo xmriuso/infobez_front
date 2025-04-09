@@ -22,7 +22,7 @@ class Themes {
             backgroundColor: AppColors.white,
             foregroundColor: AppColors.white,
             minimumSize: const Size(double.infinity, 61),
-            textStyle: AppTypography.font12RegularZillaSlab.copyWith(
+            textStyle: AppTypography.font12RegularMontserrat.copyWith(
               color: AppColors.black,
             ),
             shape: RoundedRectangleBorder(

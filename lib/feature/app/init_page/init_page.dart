@@ -90,9 +90,11 @@ class _InitPageState extends State<InitPage> with TickerProviderStateMixin {
                     begin: _alignmentAnimation1.value,
                     end: _alignmentAnimation2.value,
                     colors: const [
-                      Colors.pinkAccent,
-                      Colors.orangeAccent,
-                      Colors.yellowAccent,
+                      Color.fromARGB(255, 39, 52, 200),
+                      Color.fromARGB(255, 0, 132, 255),
+                      Color.fromARGB(255, 44, 172, 226),
+                      Color.fromARGB(255, 80, 247, 219),
+                    
                     ],
                   ),
                 ),
@@ -110,7 +112,7 @@ class _InitPageState extends State<InitPage> with TickerProviderStateMixin {
                   child: const Text(
                     "Добро пожаловать в фитнес-мир!",
                     style: TextStyle(
-                      fontSize: 26,
+                      fontSize: 35,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                       shadows: [

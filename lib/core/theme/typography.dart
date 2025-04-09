@@ -8,12 +8,12 @@ abstract class AppTypography {
 
   static var font14Regular;
 
-  static TextStyle _zillaSlab(
+  static TextStyle _montserrat(
           {FontWeight? fontWeight,
           double? fontSize,
           double? letterSpacing,
           double? height}) =>
-      GoogleFonts.zillaSlab(
+      GoogleFonts.montserrat(
               fontWeight: fontWeight,
               fontSize: fontSize,
               letterSpacing: letterSpacing,
@@ -26,35 +26,21 @@ abstract class AppTypography {
         ],
       );
 
-static TextStyle _unbounded(
-          {FontWeight? fontWeight,
-          double? fontSize,
-          double? letterSpacing,
-          double? height}) =>
-      GoogleFonts.unbounded(
-              fontWeight: fontWeight,
-              fontSize: fontSize,
-              letterSpacing: letterSpacing,
-              height: height)
-          .copyWith(
-        fontFeatures: <FontFeature>[
-          const FontFeature.enable('lnum'),
-          const FontFeature.enable('pnum'),
-          const FontFeature.disable('liga'),
-        ],
-      );
+  static TextStyle get font12RegularMontserrat => _montserrat(fontSize: 12);
 
-  static TextStyle get font12RegularZillaSlab => _zillaSlab(fontSize: 12);
+  static TextStyle get font18RegularMontserrat => _montserrat(fontSize: 18);
 
-  static TextStyle get font18RegularZillaSlab => _zillaSlab(fontSize: 18);
+  static TextStyle get font14RegularMontserrat => _montserrat(fontSize: 14);
 
-  static TextStyle get font20RegularZillaSlab => _zillaSlab(fontSize: 20);
 
-  static TextStyle get font48RegularZillaSlab => _zillaSlab(fontSize: 48);
+  static TextStyle get font20RegularMontserrat => _montserrat(fontSize: 20);
 
-  static TextStyle get font28RegularZillaSlab => _zillaSlab(fontSize: 28);
+  static TextStyle get font48RegularMontserrat => _montserrat(fontSize: 48);
 
-  static TextStyle get font28RegularUnbounded => _unbounded(fontSize: 28);
+  static TextStyle get font28RegularMontserrat => _montserrat(fontSize: 28);
+
+  static TextStyle get font32RegularMontserrat => _montserrat(fontSize: 32);
+
 
 }
 
@@ -69,5 +55,3 @@ extension Weights on TextStyle {
 
   TextStyle get heavy => copyWith(fontWeight: FontWeight.w800);
 }
-
-

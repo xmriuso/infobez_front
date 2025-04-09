@@ -48,7 +48,7 @@ class _AuthPageState extends State<AuthPage> {
                 children: [
                   Text(
                     'Login',
-                    style: AppTypography.font48RegularZillaSlab.copyWith(
+                    style: AppTypography.font48RegularMontserrat.copyWith(
                       fontWeight: FontWeight.w700,
                       color: AppColors.white,
                     ),

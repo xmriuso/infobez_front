@@ -44,7 +44,7 @@ class AppButtonWidget extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               maxLines: 1,
               textAlign: TextAlign.center,
-              style: AppTypography.font18RegularZillaSlab.copyWith(
+              style: AppTypography.font18RegularMontserrat.copyWith(
                 fontWeight: FontWeight.w700,
                 color: AppColors.black,
               ),

@@ -252,7 +252,7 @@ class TopBarItem extends StatelessWidget {
         ),
         child: Text(
           title,
-          style: AppTypography.font20RegularZillaSlab.copyWith(
+          style: AppTypography.font20RegularMontserrat.copyWith(
             fontWeight: isSelected ? FontWeight.bold : FontWeight.w400,
             color: isSelected ? AppColors.white : AppColors.white,
           ),
