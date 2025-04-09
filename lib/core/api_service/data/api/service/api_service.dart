@@ -38,9 +38,11 @@ class ApiService implements Api {
       final response = await _dio.get(
         'courses/getPageByDescription/',
         queryParameters: {
-          if (numberPage != null) 'number_page': numberPage,
-          if (quantity != null)'quantity_on_page': quantity,
-          if (search != null)'description': search,
+          'number_page': 1,
+          'quantity_on_page': 10,
+          if (search != null) 'description': search,
+          //if (numberPage != null) 'number_page': numberPage,
+          //if (quantity != null)'quantity_on_page': quantity,
         },
       );
       if (response.data != null) {

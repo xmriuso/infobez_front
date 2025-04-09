@@ -23,6 +23,7 @@ import 'package:test_web_project/feature/all_courses_page/bloc/all_courses_page_
     as _i613;
 import 'package:test_web_project/feature/detail_course_page/bloc/detail_course_page_bloc.dart'
     as _i602;
+import 'package:test_web_project/feature/detail_module_page/bloc/detail_module_page_bloc.dart';
 
 extension GetItInjectableX on _i174.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -40,6 +41,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i540.ProjectRepositoryImpl(apiService: gh<_i982.ApiService>()));
     gh.lazySingleton<_i815.ProjectUseCase>(() =>
         _i815.ProjectUseCase(projectRepository: gh<_i774.ProjectRepository>()));
+    gh.lazySingleton<DetailModulePageBloc>(
+        () => DetailModulePageBloc(gh<_i815.ProjectUseCase>()));
     gh.lazySingleton<_i613.AllCoursesPageBloc>(
         () => _i613.AllCoursesPageBloc(gh<_i815.ProjectUseCase>()));
     gh.lazySingleton<_i602.DetailCoursePageBloc>(

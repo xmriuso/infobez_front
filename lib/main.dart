@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:test_web_project/feature/detail_course_page/bloc/detail_course_page_bloc.dart';
+import 'package:test_web_project/feature/detail_module_page/bloc/detail_module_page_bloc.dart';
 
 import 'core/di/di.dart';
 import 'core/theme/theme.dart';
@@ -17,7 +18,6 @@ void main() {
 }
 
 class MyApp extends StatefulWidget {
-
   const MyApp({super.key});
 
   @override
@@ -25,7 +25,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
   final _router = RoutesInit();
 
   @override
@@ -35,8 +34,11 @@ class _MyAppState extends State<MyApp> {
         BlocProvider.value(
           value: getIt<AllCoursesPageBloc>(),
         ),
-          BlocProvider.value(
+        BlocProvider.value(
           value: getIt<DetailCoursePageBloc>(),
+        ),
+        BlocProvider.value(
+          value: getIt<DetailModulePageBloc>(),
         ),
       ],
       child: MaterialApp.router(

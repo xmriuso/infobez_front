@@ -5,6 +5,7 @@ import 'package:test_web_project/core/theme/app_colors.dart';
 import 'package:test_web_project/core/theme/typography.dart';
 import 'package:test_web_project/feature/all_courses_page/widgets/course_element_widget.dart';
 import 'package:test_web_project/feature/app/routing/route_path.dart';
+import 'package:test_web_project/feature/detail_module_page/bloc/detail_module_page_bloc.dart';
 
 import '../bloc/detail_course_page_bloc.dart';
 
@@ -79,6 +80,7 @@ class _DetailCoursePage extends State<DetailCoursePage> {
                           return GestureDetector(
                             onTap: () {
                               context.goNamed(RoutePath.detailModulePage);
+                              context.read<DetailModulePageBloc>().add(LoadModulesEvent(module.id!));
                             },
                             child: image != null
                                 ? Image.memory(
