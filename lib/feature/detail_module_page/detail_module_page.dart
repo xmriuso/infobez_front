@@ -4,7 +4,6 @@ import 'package:test_web_project/core/api_service/domain/entities/modules_by_id_
 import 'package:test_web_project/feature/detail_module_page/bloc/detail_module_page_bloc.dart';
 
 class DetailModulePage extends StatefulWidget {
-
   const DetailModulePage({super.key});
 
   @override
@@ -12,6 +11,22 @@ class DetailModulePage extends StatefulWidget {
 }
 
 class _DetailModulePageState extends State<DetailModulePage> {
+  int currentVideoIndex = 0;
+  
+  void _nextVideo() {
+    setState(() {
+      currentVideoIndex++;
+    });
+  }
+
+  void _previousVideo() {
+    setState(() {
+      if (currentVideoIndex > 0) {
+        currentVideoIndex--;
+      }
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -37,7 +52,61 @@ class _DetailModulePageState extends State<DetailModulePage> {
           }
           
           if (state is DetailModulePageLoaded) {
-            return _buildModulesList(state.modules);
+            return Column(
+              children: [
+                // Блок с видео-плеером
+                Expanded(
+                  flex: 4,
+                  child: Container(
+                    width: double.infinity,
+                    margin: const EdgeInsets.all(20),
+                    padding: const EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                      color: const Color.fromARGB(255, 255, 245, 248),
+                      borderRadius: BorderRadius.circular(24),
+                    ),
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Container(
+                          width: double.infinity,
+                          height: double.infinity,
+                          decoration: BoxDecoration(
+                            color: Colors.grey.shade300,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: const Icon(
+                            Icons.play_arrow,
+                            size: 80,
+                            color: Colors.white,
+                          ),
+                        ),
+                        Positioned(
+                          left: 10,
+                          child: IconButton(
+                            icon: const Icon(Icons.arrow_back_ios_new),
+                            onPressed: _previousVideo,
+                          ),
+                        ),
+                        Positioned(
+                          right: 10,
+                          child: IconButton(
+                            icon: const Icon(Icons.arrow_forward_ios),
+                            onPressed: _nextVideo,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                
+                // Список модулей
+                Expanded(
+                  flex: 3,
+                  child: _buildModulesList(state.modules),
+                ),
+              ],
+            );
           }
           
           return const SizedBox.shrink();
@@ -60,6 +129,10 @@ class _DetailModulePageState extends State<DetailModulePage> {
                 : null,
             leading: const Icon(Icons.video_library),
             onTap: () {
+              // Обработка нажатия на модуль
+              setState(() {
+                currentVideoIndex = index;
+              });
             },
           ),
         );

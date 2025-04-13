@@ -37,7 +37,7 @@ class ProjectRepositoryImpl extends ProjectRepository {
   }
 
   @override
-  Future<AllLessonsEntity?> getModulesByCourceId({
+  Future<AllLessonsEntity?> getModulesByCourseId({
     required int idCourse,
   }) async {
     return await apiService.getModulesByCourceId(

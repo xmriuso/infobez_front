@@ -2,12 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 abstract class AppTypography {
-  static var titleSmall;
-
-  static var bodySmall;
-
-  static var font14Regular;
-
+  
   static TextStyle _zillaSlab(
           {FontWeight? fontWeight,
           double? fontSize,
@@ -55,6 +50,10 @@ static TextStyle _unbounded(
   static TextStyle get font28RegularZillaSlab => _zillaSlab(fontSize: 28);
 
   static TextStyle get font28RegularUnbounded => _unbounded(fontSize: 28);
+
+  static TextStyle get font32RegularZillaSlab => _zillaSlab(fontSize: 32);
+
+  static TextStyle get font14RegularZillaSlab => _zillaSlab(fontSize: 14);
 
 }
 

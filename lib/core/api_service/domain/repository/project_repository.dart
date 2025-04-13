@@ -16,7 +16,7 @@ abstract class ProjectRepository {
     required int idCourse,
   });
 
-  Future<AllLessonsEntity?> getModulesByCourceId({
+  Future<AllLessonsEntity?> getModulesByCourseId({
     required int idCourse,
   });
 

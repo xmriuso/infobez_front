@@ -46,7 +46,7 @@ class ProjectUseCase {
     required int idCourse,
   }) async {
     try {
-      final result = await projectRepository.getModulesByCourceId(
+      final result = await projectRepository.getModulesByCourseId(
         idCourse: idCourse,
       );
       return result;

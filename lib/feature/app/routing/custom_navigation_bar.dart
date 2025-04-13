@@ -130,7 +130,7 @@ class _NavIconButtonState extends State<NavIconButton> {
                       ),
                       _buildMenuButton(
                         icon: Icons.delete,
-                        label: 'Корз ина',
+                        label: 'Корзина',
                         onPressed: () => null,
                       ),
                       _buildMenuButton(
