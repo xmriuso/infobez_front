@@ -19,11 +19,14 @@ import 'package:test_web_project/core/api_service/domain/repository/project_repo
     as _i774;
 import 'package:test_web_project/core/api_service/domain/usecases/project_usecase.dart'
     as _i815;
+import 'package:test_web_project/core/services/cache_service_cubit/cache_service_cubit.dart'
+    as _i838;
 import 'package:test_web_project/feature/all_courses_page/bloc/all_courses_page_bloc.dart'
     as _i613;
 import 'package:test_web_project/feature/detail_course_page/bloc/detail_course_page_bloc.dart'
     as _i602;
-import 'package:test_web_project/feature/detail_module_page/bloc/detail_module_page_bloc.dart';
+import 'package:test_web_project/feature/favourites_courses_page/bloc/favourites_courses_page_bloc.dart'
+    as _i311;
 
 extension GetItInjectableX on _i174.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -37,16 +40,17 @@ extension GetItInjectableX on _i174.GetIt {
       environmentFilter,
     );
     gh.lazySingleton<_i982.ApiService>(() => _i982.ApiService());
+    gh.lazySingleton<_i838.CacheServiceCubit>(() => _i838.CacheServiceCubit());
     gh.lazySingleton<_i774.ProjectRepository>(
         () => _i540.ProjectRepositoryImpl(apiService: gh<_i982.ApiService>()));
     gh.lazySingleton<_i815.ProjectUseCase>(() =>
         _i815.ProjectUseCase(projectRepository: gh<_i774.ProjectRepository>()));
-    gh.lazySingleton<DetailModulePageBloc>(
-        () => DetailModulePageBloc(gh<_i815.ProjectUseCase>()));
     gh.lazySingleton<_i613.AllCoursesPageBloc>(
         () => _i613.AllCoursesPageBloc(gh<_i815.ProjectUseCase>()));
     gh.lazySingleton<_i602.DetailCoursePageBloc>(
         () => _i602.DetailCoursePageBloc(gh<_i815.ProjectUseCase>()));
+    gh.lazySingleton<_i311.FavouritesCoursesPageBloc>(
+        () => _i311.FavouritesCoursesPageBloc(gh<_i815.ProjectUseCase>()));
     return this;
   }
 }

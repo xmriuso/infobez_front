@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:test_web_project/core/resourses/images.dart';
 import 'package:test_web_project/core/theme/app_colors.dart';
 import 'package:test_web_project/feature/app/routing/route_path.dart';
+import 'package:test_web_project/main.dart';
 
 import '../../../core/theme/typography.dart';
+import '../../favourites_courses_page/bloc/favourites_courses_page_bloc.dart';
 
 class CustomNavigationBar extends StatelessWidget {
   final StatefulNavigationShell child;
@@ -47,7 +50,11 @@ class CustomNavigationBar extends StatelessWidget {
                   title: 'Все курсы',
                   isSelected: index == 0,
                   onTap: () {
-                    child.goBranch(0);
+                    if (child.currentIndex == 0) {
+                      child.goBranch(0, initialLocation: true);
+                    } else {
+                      child.goBranch(0);
+                    }
                   },
                 ),
                 const SizedBox(width: 30),
@@ -55,7 +62,20 @@ class CustomNavigationBar extends StatelessWidget {
                   title: 'Мои курсы',
                   isSelected: index == 1,
                   onTap: () {
-                    child.goBranch(1);
+                    if (child.currentIndex == 1) {
+                      child.goBranch(1, initialLocation: true);
+                      context
+                          .read<FavouritesCoursesPageBloc>()
+                          .add(LoadFavouriteCoursesEvent());
+                    } else {
+                      child.goBranch(1);
+                      final location = GoRouter.of(context).state.path;
+                      if (location == '/favouritesCoursesPage') {
+                        context
+                            .read<FavouritesCoursesPageBloc>()
+                            .add(LoadFavouriteCoursesEvent());
+                      }
+                    }
                   },
                 ),
                 const Spacer(),

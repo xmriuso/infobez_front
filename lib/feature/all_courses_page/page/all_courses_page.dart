@@ -54,6 +54,7 @@ class _AllCoursesPageState extends State<AllCoursesPage> {
                   return SizedBox(
                     height: 200,
                     child: CourseElementWidget(
+                      courseId: state.allCourses!.data![index].id,
                       imageUrl: state.imagesFiles[index],
                       title: '$title ${index + 1}',
                       description: '$description ${index + 1}',

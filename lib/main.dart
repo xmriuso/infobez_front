@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:test_web_project/feature/detail_course_page/bloc/detail_course_page_bloc.dart';
-import 'package:test_web_project/feature/detail_module_page/bloc/detail_module_page_bloc.dart';
 
 import 'core/di/di.dart';
+import 'core/services/cache_service_cubit/cache_service_cubit.dart';
 import 'core/theme/theme.dart';
 import 'feature/all_courses_page/bloc/all_courses_page_bloc.dart';
 import 'feature/app/routing/routing.dart';
+import 'feature/favourites_courses_page/bloc/favourites_courses_page_bloc.dart';
 
 void main() {
   setupDependencies();
@@ -24,9 +25,9 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
-  final _router = RoutesInit();
+final router = RoutesInit();
 
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -38,11 +39,14 @@ class _MyAppState extends State<MyApp> {
           value: getIt<DetailCoursePageBloc>(),
         ),
         BlocProvider.value(
-          value: getIt<DetailModulePageBloc>(),
+          value: getIt<CacheServiceCubit>()..loadFavourites(),
+        ),
+        BlocProvider.value(
+          value: getIt<FavouritesCoursesPageBloc>(),
         ),
       ],
       child: MaterialApp.router(
-        routerConfig: _router.router,
+        routerConfig: router.router,
         debugShowCheckedModeBanner: false,
         theme: Themes.light,
       ),

@@ -23,3 +23,8 @@ class LikeEvent extends DetailCoursePageEvent {
 class LoadImagesEvent extends DetailCoursePageEvent {
   const LoadImagesEvent();
 }
+
+class SetDetailModule extends DetailCoursePageEvent {
+  final int moduleIndex;
+  const SetDetailModule({required this.moduleIndex});
+}

@@ -53,6 +53,8 @@ static TextStyle _unbounded(
 
   static TextStyle get font32RegularZillaSlab => _zillaSlab(fontSize: 32);
 
+  static TextStyle get font36RegularZillaSlab => _zillaSlab(fontSize: 36);
+
   static TextStyle get font14RegularZillaSlab => _zillaSlab(fontSize: 14);
 
 }

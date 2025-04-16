@@ -28,8 +28,6 @@ class AllCoursesPageBloc
     for (int i = 0; i < (allCourses?.data?.length ?? 0); i++) {
       buff.add(null);
     }
-    print('123421341234123 ${allCourses?.data?.length}');
-    print('123421341234123 ${buff}');
     emit(
       AllCoursesPageLoaded(
         allCourses: allCourses,

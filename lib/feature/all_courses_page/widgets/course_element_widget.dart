@@ -1,11 +1,16 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:test_web_project/core/di/di.dart';
 import 'package:test_web_project/core/theme/typography.dart';
 import 'package:test_web_project/feature/favourites_courses_page/page/favourites_courses_page.dart';
 
+import '../../../core/services/cache_service_cubit/cache_service_cubit.dart';
+
 class CourseElementWidget extends StatefulWidget {
+  final int? courseId;
   final String title;
   final String description;
   final Uint8List? imageUrl;
@@ -16,6 +21,7 @@ class CourseElementWidget extends StatefulWidget {
     required this.title,
     required this.description,
     required this.imageUrl,
+    required this.courseId,
     this.onTap,
   });
 
@@ -24,115 +30,125 @@ class CourseElementWidget extends StatefulWidget {
 }
 
 class _CourseElementWidgetState extends State<CourseElementWidget> {
-  bool get isFavorite => FavoritesManager.favoriteCourses
-      .any((course) => course['title'] == widget.title);
-
-  void toggleFavorite() {
-    // setState(
-    //   () {
-    //     FavoritesManager.toggleFavorite(
-    //         widget.title, widget.description, widget.imageUrl);
-    //   },
-    // );
-  }
+  bool isFavourite = false;
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(16),
-      child: Stack(
-        children: [
-          AspectRatio(
-            aspectRatio: 1,
-            child: widget.imageUrl != null
-                ? Image.memory(
-                    widget.imageUrl!,
-                    fit: BoxFit.cover,
-                    width: double.infinity,
-                    // loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-                    //   if (loadingProgress == null) {
-                    //     return child;
-                    //   } else {
-                    //     return Shimmer.fromColors(
-                    //       baseColor: Colors.pink,
-                    //       highlightColor: Colors.blue,
-                    //       child: AspectRatio(
-                    //         aspectRatio: 1,
-                    //         child: Container(color: Colors.grey),
-                    //       ),
-                    //     );
-                    //   }
-                    // },
-                  )
-                : SizedBox(),
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return BlocBuilder<CacheServiceCubit, CacheServiceState>(
+      builder: (context, state) {
+        final isFavourite = widget.courseId != null
+            ? getIt
+                .get<CacheServiceCubit>()
+                .state
+                .favourites
+                .contains(widget.courseId)
+            : false;
+
+        return ClipRRect(
+          borderRadius: BorderRadius.circular(16),
+          child: Stack(
             children: [
-              SizedBox(
-                height: 40,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    IconButton(
-                      icon: Icon(
-                        isFavorite ? Icons.favorite : Icons.favorite_border,
-                        color: isFavorite ? Colors.red : Colors.white,
-                        size: 24,
-                      ),
-                      onPressed: toggleFavorite,
-                    ),
-                  ],
-                ),
+              AspectRatio(
+                aspectRatio: 1,
+                child: widget.imageUrl != null
+                    ? Image.memory(
+                        widget.imageUrl!,
+                        fit: BoxFit.cover,
+                        width: double.infinity,
+                        // loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                        //   if (loadingProgress == null) {
+                        //     return child;
+                        //   } else {
+                        //     return Shimmer.fromColors(
+                        //       baseColor: Colors.pink,
+                        //       highlightColor: Colors.blue,
+                        //       child: AspectRatio(
+                        //         aspectRatio: 1,
+                        //         child: Container(color: Colors.grey),
+                        //       ),
+                        //     );
+                        //   }
+                        // },
+                      )
+                    : SizedBox(),
               ),
-              Expanded(flex: 2, child: SizedBox()),
-              Expanded(
-                flex: 1,
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                        colors: [Colors.purple, Colors.pink],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight),
-                    borderRadius: BorderRadius.circular(12),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    height: 40,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        IconButton(
+                            icon: Icon(
+                              isFavourite
+                                  ? Icons.favorite
+                                  : Icons.favorite_border,
+                              color: isFavourite ? Colors.red : Colors.white,
+                              size: 24,
+                            ),
+                            onPressed: () {
+                              if (widget.courseId != null) {
+                                getIt
+                                    .get<CacheServiceCubit>()
+                                    .setFavourites(courseId: widget.courseId!);
+                              }
+                            }),
+                      ],
+                    ),
                   ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      FittedBox(
-                        fit: BoxFit.fill,
-                        child: Text("Выполнено 0 из 5",
-                            style: TextStyle(color: Colors.white)),
+                  Expanded(flex: 2, child: SizedBox()),
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                            colors: [Colors.purple, Colors.pink],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight),
+                        borderRadius: BorderRadius.circular(12),
                       ),
-                      SizedBox(height: 4),
-                      Expanded(
-                        child: ElevatedButton(
-                          onPressed: widget.onTap,
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.pink,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20)),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          FittedBox(
+                            fit: BoxFit.fill,
+                            child: Text("Выполнено 0 из 5",
+                                style: TextStyle(color: Colors.white)),
                           ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text("Начать"),
-                              Icon(Icons.arrow_forward, size: 16)
-                            ],
+                          SizedBox(height: 4),
+                          Expanded(
+                            child: ElevatedButton(
+                              onPressed: widget.onTap,
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.pink,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20)),
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text("Начать"),
+                                  Icon(Icons.arrow_forward, size: 16)
+                                ],
+                              ),
+                            ),
                           ),
-                        ),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
-                ),
+                ],
               ),
             ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

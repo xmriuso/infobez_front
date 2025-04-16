@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:test_web_project/feature/app/init_page/init_page.dart';
 import 'package:test_web_project/feature/app/routing/route_path.dart';
-import 'package:test_web_project/feature/detail_module_page/detail_module_page.dart';
+import 'package:test_web_project/feature/detail_module_page/page/detail_module_page.dart';
 
 import '../../all_courses_page/page/all_courses_page.dart';
 import '../../auth_page/page/auth_page.dart';
@@ -48,6 +48,20 @@ final List<StatefulShellBranch> _bottomNavBranches = <StatefulShellBranch>[
       GoRoute(
         path: RoutePath.favouritesCoursesPage,
         builder: (context, state) => FavouritesCoursesPage(),
+        routes: [
+          GoRoute(
+            path: RoutePath.favouriteDetailCoursePage,
+            name: RoutePath.favouriteDetailCoursePage,
+            builder: (context, state) => DetailCoursePage(),
+            routes: [
+              GoRoute(
+                path: RoutePath.favouriteDetailModulePage,
+                name: RoutePath.favouriteDetailModulePage,
+                builder: (context, state) => DetailModulePage(),
+              ),
+            ],
+          ),
+        ]
       ),
     ],
   ),
