@@ -26,6 +26,13 @@ class _AuthPageState extends State<AuthPage> {
   bool loginOrRegister = false;
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    context.read<AuthPageBloc>().add(CheckAuthEvent());
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(

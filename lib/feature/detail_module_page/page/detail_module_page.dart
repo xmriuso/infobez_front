@@ -40,6 +40,7 @@ class _DetailModulePageState extends State<DetailModulePage> {
   //   }
   // }
   bool _isInitialized = false;
+  int moduleIndex = 0;
 
   @override
   void didChangeDependencies() {
@@ -47,6 +48,7 @@ class _DetailModulePageState extends State<DetailModulePage> {
     if (!_isInitialized) {
       _isInitialized = true;
 
+      moduleIndex = widget.moduleId;
       final pathParams = GoRouterState.of(context).pathParameters;
       final courseId = int.tryParse(pathParams['courseId'] ?? '');
 
@@ -54,7 +56,6 @@ class _DetailModulePageState extends State<DetailModulePage> {
         context.read<DetailCoursePageBloc>().add(
               LoadDetailCourseEvent(
                 courseId: courseId,
-                moduleIndex: widget.moduleId,
               ),
             );
       }
@@ -75,11 +76,9 @@ class _DetailModulePageState extends State<DetailModulePage> {
         // },
         builder: (context, state) {
           if (state is AllCoursesPageLoadedState) {
-            print('12342342314 ${state.selectedModuleIndex}');
-
-            final arrowBackIsAvailable = state.selectedModuleIndex! > 0;
-            final arrowNextIsAvailable = state.selectedModuleIndex! <
-                (state.modulesByCourseId!.data!.length - 1);
+            final arrowBackIsAvailable = moduleIndex > 0;
+            final arrowNextIsAvailable =
+                moduleIndex < (state.modulesByCourseId!.data!.length - 1);
 
             return ListView(
               children: [
@@ -99,8 +98,8 @@ class _DetailModulePageState extends State<DetailModulePage> {
                         Flexible(
                           fit: FlexFit.tight,
                           child: VideoWidget(
-                            url: state.modulesByCourseId
-                                ?.data?[state.selectedModuleIndex!].videoUrl,
+                            url: state
+                                .modulesByCourseId?.data?[moduleIndex].videoUrl,
                           ),
                         ),
                         const SizedBox(height: 20),
@@ -111,12 +110,9 @@ class _DetailModulePageState extends State<DetailModulePage> {
                             GestureDetector(
                               onTap: arrowBackIsAvailable
                                   ? () {
-                                      context.read<DetailCoursePageBloc>().add(
-                                            SetDetailModule(
-                                                moduleIndex:
-                                                    state.selectedModuleIndex! -
-                                                        1),
-                                          );
+                                      setState(() {
+                                        moduleIndex--;
+                                      });
                                     }
                                   : null,
                               child: Icon(
@@ -130,12 +126,9 @@ class _DetailModulePageState extends State<DetailModulePage> {
                             GestureDetector(
                               onTap: arrowNextIsAvailable
                                   ? () {
-                                      context.read<DetailCoursePageBloc>().add(
-                                            SetDetailModule(
-                                                moduleIndex:
-                                                    state.selectedModuleIndex! +
-                                                        1),
-                                          );
+                                      setState(() {
+                                        moduleIndex++;
+                                      });
                                     }
                                   : null,
                               child: Icon(
@@ -159,8 +152,7 @@ class _DetailModulePageState extends State<DetailModulePage> {
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
-                    state.modulesByCourseId!.data![state.selectedModuleIndex!]
-                            .description ??
+                    state.modulesByCourseId!.data![moduleIndex].description ??
                         '',
                     style: AppTypography.font32RegularZillaSlab.copyWith(
                       fontWeight: FontWeight.w400,

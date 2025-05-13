@@ -14,6 +14,7 @@ import 'custom_navigation_bar.dart';
 final GlobalKey<NavigatorState> _allCoursesKey = GlobalKey<NavigatorState>();
 final GlobalKey<NavigatorState> _favouritesKey = GlobalKey<NavigatorState>();
 final GlobalKey<NavigatorState> _profileKey = GlobalKey<NavigatorState>();
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 final List<StatefulShellBranch> _bottomNavBranches = <StatefulShellBranch>[
   StatefulShellBranch(
@@ -98,6 +99,7 @@ class RoutesInit {
 
   static RoutesInit? _instance;
   final GoRouter router = GoRouter(
+    navigatorKey: navigatorKey,
     initialLocation: RoutePath.init,
     routes: [
       GoRoute(

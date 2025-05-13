@@ -115,9 +115,6 @@ class _DetailCoursePage extends State<DetailCoursePage> {
                                             '${int.parse(GoRouterState.of(context).pathParameters['courseId']!)}',
                                       },
                                     );
-                                    context.read<DetailCoursePageBloc>().add(
-                                          SetDetailModule(moduleIndex: index),
-                                        );
                                   },
                                   child: image != null
                                       ? Container(

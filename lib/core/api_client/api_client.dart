@@ -1,6 +1,10 @@
 import 'dart:html' as html;
 import 'package:dio/dio.dart';
+import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
+import 'package:test_web_project/feature/app/routing/route_path.dart';
+
+import '../../feature/app/routing/routing.dart';
 
 @lazySingleton
 class ApiClient {
@@ -19,7 +23,6 @@ class ApiClient {
       InterceptorsWrapper(
         onRequest: (options, handler) {
           final token = html.window.localStorage['access_token'];
-          print('1342342341234 $token');
           if (token != null) {
             options.headers['Authorization'] = 'Bearer $token';
           }
@@ -28,13 +31,18 @@ class ApiClient {
         onError: (DioException error, handler) async {
           if (error.response?.statusCode == 401 &&
               !error.requestOptions.path.contains('/auth/refresh')) {
-            final refreshed = await _refreshToken();
+            final refreshed = await refreshToken();
             if (refreshed) {
               final newToken = html.window.localStorage['access_token'];
               final opts = error.requestOptions;
               opts.headers['Authorization'] = 'Bearer $newToken';
               final cloneReq = await dio.fetch(opts);
               return handler.resolve(cloneReq);
+            } else {
+              final context = navigatorKey.currentContext;
+              if (context != null) {
+                GoRouter.of(context).go(RoutePath.authPage);
+              }
             }
           }
           return handler.next(error);
@@ -49,23 +57,43 @@ class ApiClient {
     ]);
   }
 
-  Future<bool> _refreshToken() async {
+  Future<bool> refreshToken() async {
     try {
-      final response = await dio.get(
+      final refreshToken = _getRefreshTokenFromCookie();
+      if (refreshToken == null) {
+        print('❌ refresh_token отсутствует в cookie');
+        return false;
+      }
+
+      final response = await dio.post(
         'auth/refresh',
-        options: Options(extra: {
-          'withCredentials': true,
-        }),
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $refreshToken',
+          },
+        ),
       );
+
       final newToken = response.data['access_token'];
       if (newToken != null) {
         html.window.localStorage['access_token'] = newToken;
         return true;
       }
+
       return false;
     } catch (e) {
       print('❌ Ошибка при обновлении токена: $e');
       return false;
     }
+  }
+
+  String? _getRefreshTokenFromCookie() {
+    final cookies = html.document.cookie?.split('; ') ?? [];
+    for (final cookie in cookies) {
+      if (cookie.startsWith('refresh_token=')) {
+        return cookie.substring('refresh_token='.length);
+      }
+    }
+    return null;
   }
 }

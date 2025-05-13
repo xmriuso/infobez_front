@@ -24,7 +24,6 @@ class DetailCoursePageBloc
     on<LoadDetailCourseEvent>(_onLoadDetailCourseEvent);
     on<LikeEvent>(_onLikeEvent);
     on<LoadImagesEvent>(_onLoadImagesEvent);
-    on<SetDetailModule>(_onSetDetailModule);
   }
 
   Future<void> _onLoadDetailCourseEvent(
@@ -45,7 +44,6 @@ class DetailCoursePageBloc
           detailCourse: detailCourse,
           modulesByCourseId: modulesByCourseId,
           imagesFiles: buff,
-          selectedModuleIndex: event.moduleIndex ?? 0,
         ),
       );
     } catch (e) {
@@ -87,13 +85,5 @@ class DetailCoursePageBloc
       LikeEvent event, Emitter<DetailCoursePageState> emit) async {
     // emit(AllCoursesLoadPage());
     // emit(AllCoursesPageLoaded(allCourses: allCourses));
-  }
-
-  Future<void> _onSetDetailModule(
-      SetDetailModule event, Emitter<DetailCoursePageState> emit) async {
-    if (state is AllCoursesPageLoadedState) {
-      final currentState = state as AllCoursesPageLoadedState;
-      emit(currentState.copyWith(selectedModuleIndex: event.moduleIndex));
-    }
   }
 }

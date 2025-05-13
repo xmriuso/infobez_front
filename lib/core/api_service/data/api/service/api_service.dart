@@ -101,8 +101,14 @@ class ApiService implements Api {
       ),
     );
     final newToken = result.data['access_token'];
+    final refreshToken = result.data['refresh_token'];
     if (newToken != null) {
       html.window.localStorage['access_token'] = newToken;
+    }
+    if (refreshToken != null) {
+      final expiryDate = DateTime.now().add(Duration(days: 30));
+      html.document.cookie =
+          'refresh_token=$refreshToken; path=/; expires=${expiryDate.toUtc().toIso8601String()}; SameSite=Lax';
     }
   }
 

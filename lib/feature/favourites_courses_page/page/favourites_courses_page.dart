@@ -73,13 +73,13 @@ class _FavouritesCoursesPageState extends State<FavouritesCoursesPage> {
                         description: '',
                         onTap: () {
                           if (state.favouriteCourses[index].id != null) {
-                            context
-                                .goNamed(RoutePath.favouriteDetailCoursePage);
-                            context.read<DetailCoursePageBloc>().add(
-                                  LoadDetailCourseEvent(
-                                      courseId:
-                                          state.favouriteCourses[index].id!),
-                                );
+                            context.goNamed(
+                              RoutePath.favouriteDetailCoursePage,
+                              pathParameters: {
+                                'courseId':
+                                    '${state.favouriteCourses[index].id!}',
+                              },
+                            );
                           }
                         },
                       ),

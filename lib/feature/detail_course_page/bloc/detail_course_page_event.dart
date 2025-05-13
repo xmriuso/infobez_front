@@ -9,11 +9,9 @@ sealed class DetailCoursePageEvent extends Equatable {
 
 class LoadDetailCourseEvent extends DetailCoursePageEvent {
   final int courseId;
-  final int? moduleIndex;
 
   const LoadDetailCourseEvent({
     required this.courseId,
-    this.moduleIndex,
   });
 }
 
@@ -26,10 +24,4 @@ class LikeEvent extends DetailCoursePageEvent {
 
 class LoadImagesEvent extends DetailCoursePageEvent {
   const LoadImagesEvent();
-}
-
-class SetDetailModule extends DetailCoursePageEvent {
-  final int moduleIndex;
-
-  const SetDetailModule({required this.moduleIndex});
 }

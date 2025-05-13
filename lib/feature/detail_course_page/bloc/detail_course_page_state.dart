@@ -18,13 +18,11 @@ class AllCoursesPageLoadedState extends DetailCoursePageState {
   final AllLessonsEntity? modulesByCourseId;
   final List<Uint8List?> imagesFiles;
   final bool? update;
-  final int? selectedModuleIndex;
 
   const AllCoursesPageLoadedState({
     this.detailCourse,
     this.modulesByCourseId,
     this.update,
-    this.selectedModuleIndex,
     required this.imagesFiles,
   });
 
@@ -33,14 +31,12 @@ class AllCoursesPageLoadedState extends DetailCoursePageState {
     AllLessonsEntity? modulesByCourseId,
     List<Uint8List?>? imagesFiles,
     bool? update,
-    int? selectedModuleIndex,
   }) {
     return AllCoursesPageLoadedState(
       detailCourse: detailCourse ?? this.detailCourse,
       modulesByCourseId: modulesByCourseId ?? this.modulesByCourseId,
       imagesFiles: imagesFiles ?? this.imagesFiles,
       update: update ?? this.update,
-      selectedModuleIndex: selectedModuleIndex ?? this.selectedModuleIndex,
     );
   }
 
@@ -49,7 +45,6 @@ class AllCoursesPageLoadedState extends DetailCoursePageState {
         detailCourse,
         modulesByCourseId,
         update,
-        selectedModuleIndex,
         imagesFiles,
       ];
 }
