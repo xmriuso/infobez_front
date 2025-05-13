@@ -11,6 +11,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
+import 'package:test_web_project/core/api_client/api_client.dart' as _i53;
 import 'package:test_web_project/core/api_service/data/api/service/api_service.dart'
     as _i982;
 import 'package:test_web_project/core/api_service/data/repository/project_repository_impl.dart'
@@ -23,6 +24,8 @@ import 'package:test_web_project/core/services/cache_service_cubit/cache_service
     as _i838;
 import 'package:test_web_project/feature/all_courses_page/bloc/all_courses_page_bloc.dart'
     as _i613;
+import 'package:test_web_project/feature/auth_page/bloc/auth_page_bloc.dart'
+    as _i557;
 import 'package:test_web_project/feature/detail_course_page/bloc/detail_course_page_bloc.dart'
     as _i602;
 import 'package:test_web_project/feature/favourites_courses_page/bloc/favourites_courses_page_bloc.dart'
@@ -39,8 +42,10 @@ extension GetItInjectableX on _i174.GetIt {
       environment,
       environmentFilter,
     );
-    gh.lazySingleton<_i982.ApiService>(() => _i982.ApiService());
+    gh.lazySingleton<_i53.ApiClient>(() => _i53.ApiClient());
     gh.lazySingleton<_i838.CacheServiceCubit>(() => _i838.CacheServiceCubit());
+    gh.lazySingleton<_i982.ApiService>(
+        () => _i982.ApiService(gh<_i53.ApiClient>()));
     gh.lazySingleton<_i774.ProjectRepository>(
         () => _i540.ProjectRepositoryImpl(apiService: gh<_i982.ApiService>()));
     gh.lazySingleton<_i815.ProjectUseCase>(() =>
@@ -51,6 +56,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i602.DetailCoursePageBloc(gh<_i815.ProjectUseCase>()));
     gh.lazySingleton<_i311.FavouritesCoursesPageBloc>(
         () => _i311.FavouritesCoursesPageBloc(gh<_i815.ProjectUseCase>()));
+    gh.lazySingleton<_i557.AuthPageBloc>(
+        () => _i557.AuthPageBloc(gh<_i815.ProjectUseCase>()));
     return this;
   }
 }

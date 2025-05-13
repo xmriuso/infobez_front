@@ -19,50 +19,69 @@ class ProjectUseCase {
     int? quantity,
     String? search,
   }) async {
-    try {
-      final result = await projectRepository.getAllCourses(
-        numberPage: numberPage,
-        quantity: quantity,
-        search: search,
-      );
-      return result;
-    } on DioException catch (e) {}
+    final result = await projectRepository.getAllCourses(
+      numberPage: numberPage,
+      quantity: quantity,
+      search: search,
+    );
+    return result;
+
     return null;
   }
 
   Future<DetailCourseEntity?> getDetailCourse({
     required int idCourse,
   }) async {
-    try {
-      final result = await projectRepository.getDetailCourse(
-        idCourse: idCourse,
-      );
-      return result;
-    } on DioException catch (e) {}
+    final result = await projectRepository.getDetailCourse(
+      idCourse: idCourse,
+    );
+    return result;
+
     return null;
   }
 
   Future<AllLessonsEntity?> getModulesByCourceId({
     required int idCourse,
   }) async {
-    try {
-      final result = await projectRepository.getModulesByCourseId(
-        idCourse: idCourse,
-      );
-      return result;
-    } on DioException catch (e) {}
+    final result = await projectRepository.getModulesByCourseId(
+      idCourse: idCourse,
+    );
+    return result;
+
     return null;
   }
 
   Future<Uint8List?> getImageFromString({
     required String image,
   }) async {
-    try {
-      final result = await projectRepository.getImageFromString(
-        image: image,
-      );
-      return result;
-    } on DioException catch (e) {}
+    final result = await projectRepository.getImageFromString(
+      image: image,
+    );
+    return result;
     return null;
+  }
+
+  Future<void> userCreate({
+    required String name,
+    required String email,
+    required String password,
+  }) async {
+    await projectRepository.userCreate(
+      name: name,
+      email: email,
+      password: password,
+    );
+    return;
+  }
+
+  Future<void> login({
+    required String username,
+    required String password,
+  }) async {
+    await projectRepository.login(
+      username: username,
+      password: password,
+    );
+    return;
   }
 }

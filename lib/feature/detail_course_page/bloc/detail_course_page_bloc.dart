@@ -45,6 +45,7 @@ class DetailCoursePageBloc
           detailCourse: detailCourse,
           modulesByCourseId: modulesByCourseId,
           imagesFiles: buff,
+          selectedModuleIndex: event.moduleIndex ?? 0,
         ),
       );
     } catch (e) {

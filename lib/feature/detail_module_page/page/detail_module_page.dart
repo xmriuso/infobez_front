@@ -2,41 +2,81 @@ import 'dart:ui' as ui;
 import 'dart:html';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:test_web_project/core/api_service/domain/entities/modules_by_id_entity.dart';
+import 'package:test_web_project/core/di/di.dart';
 import 'package:test_web_project/core/theme/app_colors.dart';
 
 import '../../../core/theme/typography.dart';
 import '../../detail_course_page/bloc/detail_course_page_bloc.dart';
 
 class DetailModulePage extends StatefulWidget {
-  const DetailModulePage({super.key});
+  final int moduleId;
+
+  const DetailModulePage({
+    super.key,
+    required this.moduleId,
+  });
 
   @override
   State<DetailModulePage> createState() => _DetailModulePageState();
 }
 
 class _DetailModulePageState extends State<DetailModulePage> {
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   if (getIt<DetailCoursePageBloc>().state is AllCoursesPageInitial) {
+  //     final courseId = int.tryParse(
+  //         GoRouterState.of(context).pathParameters['courseId'] ?? '');
+  //     if (courseId != null) {
+  //       context.read<DetailCoursePageBloc>().add(
+  //             LoadDetailCourseEvent(
+  //               courseId: courseId,
+  //               moduleIndex: widget.moduleId,
+  //             ),
+  //           );
+  //     }
+  //   }
+  // }
+  bool _isInitialized = false;
+
   @override
-  void initState() {
-    super.initState();
-    //context.read<DetailModulePageBloc>().add(LoadModulesEvent(widget.courseId));
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_isInitialized) {
+      _isInitialized = true;
+
+      final pathParams = GoRouterState.of(context).pathParameters;
+      final courseId = int.tryParse(pathParams['courseId'] ?? '');
+
+      if (courseId != null) {
+        context.read<DetailCoursePageBloc>().add(
+              LoadDetailCourseEvent(
+                courseId: courseId,
+                moduleIndex: widget.moduleId,
+              ),
+            );
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocBuilder<DetailCoursePageBloc, DetailCoursePageState>(
-        buildWhen: (lastState, state) {
-          final lastStateS = lastState as AllCoursesPageLoadedState;
-          final stateS = state as AllCoursesPageLoadedState;
-          if (lastStateS.selectedModuleIndex != stateS.selectedModuleIndex) {
-            return true;
-          }
-          return false;
-        },
+        // buildWhen: (lastState, state) {
+        //   final lastStateS = lastState ;
+        //   final stateS = state;
+        //   if (lastStateS.selectedModuleIndex != stateS.selectedModuleIndex) {
+        //     return true;
+        //   }
+        //   return false;
+        // },
         builder: (context, state) {
           if (state is AllCoursesPageLoadedState) {
-            print('123412341233412');
+            print('12342342314 ${state.selectedModuleIndex}');
+
             final arrowBackIsAvailable = state.selectedModuleIndex! > 0;
             final arrowNextIsAvailable = state.selectedModuleIndex! <
                 (state.modulesByCourseId!.data!.length - 1);

@@ -8,6 +8,7 @@ import 'core/services/cache_service_cubit/cache_service_cubit.dart';
 import 'core/theme/theme.dart';
 import 'feature/all_courses_page/bloc/all_courses_page_bloc.dart';
 import 'feature/app/routing/routing.dart';
+import 'feature/auth_page/bloc/auth_page_bloc.dart';
 import 'feature/favourites_courses_page/bloc/favourites_courses_page_bloc.dart';
 
 void main() {
@@ -43,6 +44,9 @@ class _MyAppState extends State<MyApp> {
         ),
         BlocProvider.value(
           value: getIt<FavouritesCoursesPageBloc>(),
+        ),
+        BlocProvider.value(
+          value: getIt<AuthPageBloc>(),
         ),
       ],
       child: MaterialApp.router(

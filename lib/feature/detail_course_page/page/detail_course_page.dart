@@ -9,7 +9,12 @@ import '../bloc/detail_course_page_bloc.dart';
 
 //изн
 class DetailCoursePage extends StatefulWidget {
-  const DetailCoursePage({super.key});
+  final int courseId;
+
+  const DetailCoursePage({
+    super.key,
+    required this.courseId,
+  });
 
   @override
   State<DetailCoursePage> createState() => _DetailCoursePage();
@@ -19,6 +24,9 @@ class _DetailCoursePage extends State<DetailCoursePage> {
   @override
   void initState() {
     super.initState();
+    context.read<DetailCoursePageBloc>().add(
+          LoadDetailCourseEvent(courseId: widget.courseId),
+        );
   }
 
   static double itemWidth = 400;
@@ -44,8 +52,7 @@ class _DetailCoursePage extends State<DetailCoursePage> {
           return Column(
             children: [
               Padding(
-                padding:
-                    const EdgeInsets.only(left: 20, right: 20, top: 15),
+                padding: const EdgeInsets.only(left: 20, right: 20, top: 15),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -100,9 +107,17 @@ class _DetailCoursePage extends State<DetailCoursePage> {
                                 final image = state.imagesFiles[index];
                                 return GestureDetector(
                                   onTap: () {
-                                    context.goNamed(RoutePath.detailModulePage);
+                                    context.goNamed(
+                                      RoutePath.detailModulePage,
+                                      pathParameters: {
+                                        'moduleId': '$index',
+                                        'courseId':
+                                            '${int.parse(GoRouterState.of(context).pathParameters['courseId']!)}',
+                                      },
+                                    );
                                     context.read<DetailCoursePageBloc>().add(
-                                        SetDetailModule(moduleIndex: index));
+                                          SetDetailModule(moduleIndex: index),
+                                        );
                                   },
                                   child: image != null
                                       ? Container(

@@ -52,4 +52,28 @@ class ProjectRepositoryImpl extends ProjectRepository {
     final result = await apiService.getImageFromString(image: image);
     return result;
   }
+
+  @override
+  Future<void> userCreate({
+    required String name,
+    required String email,
+    required String password,
+  }) async {
+    await apiService.userCreate(
+      name: name,
+      email: email,
+      password: password,
+    );
+  }
+
+  @override
+  Future<void> login({
+    required String username,
+    required String password,
+  }) async {
+    await apiService.login(
+      username: username,
+      password: password,
+    );
+  }
 }

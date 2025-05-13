@@ -17,8 +17,8 @@ final GlobalKey<NavigatorState> _profileKey = GlobalKey<NavigatorState>();
 
 final List<StatefulShellBranch> _bottomNavBranches = <StatefulShellBranch>[
   StatefulShellBranch(
-    navigatorKey: _allCoursesKey,
-    restorationScopeId: 'all_courses',
+    //navigatorKey: _allCoursesKey,
+    //restorationScopeId: 'all_courses',
     routes: [
       GoRoute(
         path: RoutePath.allCoursesPage,
@@ -26,14 +26,20 @@ final List<StatefulShellBranch> _bottomNavBranches = <StatefulShellBranch>[
         builder: (context, state) => AllCoursesPage(),
         routes: [
           GoRoute(
-            path: RoutePath.detailCoursePage,
+            path: '${RoutePath.detailCoursePage}/:courseId',
             name: RoutePath.detailCoursePage,
-            builder: (context, state) => DetailCoursePage(),
+            builder: (context, state) {
+              final courseId = int.parse(state.pathParameters['courseId']!);
+              return DetailCoursePage(courseId: courseId);
+            },
             routes: [
               GoRoute(
-                path: RoutePath.detailModulePage,
+                path: '${RoutePath.detailModulePage}/:moduleId',
                 name: RoutePath.detailModulePage,
-                builder: (context, state) => DetailModulePage(),
+                builder: (context, state) {
+                  final moduleId = int.parse(state.pathParameters['moduleId']!);
+                  return DetailModulePage(moduleId: moduleId);
+                },
               ),
             ],
           ),
@@ -42,32 +48,38 @@ final List<StatefulShellBranch> _bottomNavBranches = <StatefulShellBranch>[
     ],
   ),
   StatefulShellBranch(
-    navigatorKey: _favouritesKey,
-    restorationScopeId: 'favourites',
+    //navigatorKey: _favouritesKey,
+    //restorationScopeId: 'favourites',
     routes: [
       GoRoute(
-        path: RoutePath.favouritesCoursesPage,
-        builder: (context, state) => FavouritesCoursesPage(),
-        routes: [
-          GoRoute(
-            path: RoutePath.favouriteDetailCoursePage,
-            name: RoutePath.favouriteDetailCoursePage,
-            builder: (context, state) => DetailCoursePage(),
-            routes: [
-              GoRoute(
-                path: RoutePath.favouriteDetailModulePage,
-                name: RoutePath.favouriteDetailModulePage,
-                builder: (context, state) => DetailModulePage(),
-              ),
-            ],
-          ),
-        ]
-      ),
+          path: RoutePath.favouritesCoursesPage,
+          builder: (context, state) => FavouritesCoursesPage(),
+          routes: [
+            GoRoute(
+              path: '${RoutePath.favouriteDetailCoursePage}/:courseId',
+              name: RoutePath.favouriteDetailCoursePage,
+              builder: (context, state) {
+                final courseId = int.parse(state.pathParameters['courseId']!);
+                return DetailCoursePage(courseId: courseId);
+              },
+              routes: [
+                GoRoute(
+                  path: '${RoutePath.favouriteDetailModulePage}/:moduleId',
+                  name: RoutePath.favouriteDetailModulePage,
+                  builder: (context, state) {
+                    final moduleId =
+                        int.parse(state.pathParameters['moduleId']!);
+                    return DetailModulePage(moduleId: moduleId);
+                  },
+                ),
+              ],
+            ),
+          ]),
     ],
   ),
   StatefulShellBranch(
-    navigatorKey: _profileKey,
-    restorationScopeId: 'profile',
+    //navigatorKey: _profileKey,
+    //restorationScopeId: 'profile',
     routes: [
       GoRoute(
         path: RoutePath.profilePage,
@@ -96,19 +108,28 @@ class RoutesInit {
         path: RoutePath.authPage,
         builder: (context, state) => AuthPage(),
       ),
-      StatefulShellRoute.indexedStack(
-        restorationScopeId: 'shell_route',
-        // navigatorContainerBuilder: (context, shell, children) {
-        //   return IndexedStack( // ✅ Держим все страницы в памяти
-        //     index: shell.currentIndex,
-        //     children: children,
-        //   );
-        // },
+      StatefulShellRoute(
+        navigatorContainerBuilder: (context, shell, children) {
+          return children[shell.currentIndex];
+        },
         builder: (context, state, child) {
           return CustomNavigationBar(index: child.currentIndex, child: child);
         },
         branches: _bottomNavBranches,
       ),
+      // StatefulShellRoute.indexedStack(
+      //   restorationScopeId: 'shell_route',
+      //   // navigatorContainerBuilder: (context, shell, children) {
+      //   //   return IndexedStack( // ✅ Держим все страницы в памяти
+      //   //     index: shell.currentIndex,
+      //   //     children: children,
+      //   //   );
+      //   // },
+      //   builder: (context, state, child) {
+      //     return CustomNavigationBar(index: child.currentIndex, child: child);
+      //   },
+      //   branches: _bottomNavBranches,
+      // ),
     ],
   );
 }

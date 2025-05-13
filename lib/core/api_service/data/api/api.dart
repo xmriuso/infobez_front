@@ -24,5 +24,14 @@ abstract class Api {
     required String image,
   });
 
+  Future<void> userCreate({
+    required String name,
+    required String email,
+    required String password,
+  });
 
+  Future<void> login({
+    required String username,
+    required String password,
+  });
 }

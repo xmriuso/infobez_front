@@ -60,12 +60,13 @@ class _AllCoursesPageState extends State<AllCoursesPage> {
                       description: '$description ${index + 1}',
                       onTap: () {
                         if (state.allCourses!.data![index].id != null) {
-                          context.goNamed(RoutePath.detailCoursePage);
-                          context.read<DetailCoursePageBloc>().add(
-                                LoadDetailCourseEvent(
-                                    courseId:
-                                        state.allCourses!.data![index].id!),
-                              );
+                          context.goNamed(
+                            RoutePath.detailCoursePage,
+                            pathParameters: {
+                              'courseId':
+                                  '${state.allCourses!.data![index].id!}',
+                            },
+                          );
                         }
                       },
                     ),
