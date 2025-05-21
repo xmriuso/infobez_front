@@ -45,4 +45,41 @@ abstract class ProjectRepository {
     String? password,
     html.File? image,
   });
+
+  Future<List<DetailCourseEntity?>?> getByIdCreator({
+    required int userId,
+  });
+
+  Future<void> createCourse({
+    String? title,
+    String? description,
+    html.File? image,
+  });
+
+  Future<void> updateCourse({
+    int? id,
+    String? title,
+    String? description,
+    html.File? image,
+  });
+
+  Future<LessonEntity?> getModuleById({
+    required int moduleId,
+  });
+
+  Future<void> updateModule({
+    int? id,
+    String? title,
+    String? description,
+    String? videoUrl,
+    html.File? image,
+  });
+
+  Future<void> createModule({
+    int? id,
+    String? title,
+    String? description,
+    String? videoUrl,
+    html.File? image,
+  });
 }

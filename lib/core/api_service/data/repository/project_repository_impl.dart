@@ -98,4 +98,84 @@ class ProjectRepositoryImpl extends ProjectRepository {
       image: image,
     );
   }
+
+  @override
+  Future<void> createCourse({
+    String? title,
+    String? description,
+    html.File? image,
+  }) async {
+    return await apiService.createCourse(
+      title: title,
+      description: description,
+      image: image,
+    );
+  }
+
+  @override
+  Future<List<DetailCourseEntity?>?> getByIdCreator({
+    required int userId,
+  }) async {
+    return await apiService.getByIdCreator(
+      userId: userId,
+    );
+  }
+
+  @override
+  Future<void> updateCourse({
+    int? id,
+    String? title,
+    String? description,
+    html.File? image,
+  }) async {
+    return await apiService.updateCourse(
+      id: id,
+      title: title,
+      description: description,
+      image: image,
+    );
+  }
+
+  @override
+  Future<LessonEntity?> getModuleById({
+    required int moduleId,
+  }) async {
+    return await apiService.getModuleById(
+      moduleId: moduleId,
+    );
+  }
+
+  @override
+  Future<void> updateModule({
+    int? id,
+    String? title,
+    String? description,
+    String? videoUrl,
+    html.File? image,
+  }) async {
+    return await apiService.updateModule(
+      id: id,
+      title: title,
+      description: description,
+      videoUrl: videoUrl,
+      image: image,
+    );
+  }
+
+  @override
+  Future<void> createModule({
+    int? id,
+    String? title,
+    String? description,
+    String? videoUrl,
+    html.File? image,
+  }) async {
+    return await apiService.createModule(
+      id: id,
+      title: title,
+      description: description,
+      videoUrl: videoUrl,
+      image: image,
+    );
+  }
 }

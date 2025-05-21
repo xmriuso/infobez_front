@@ -101,7 +101,81 @@ class ProjectUseCase {
     );
   }
 
+  Future<void> createCourse({
+    String? title,
+    String? description,
+    html.File? image,
+  }) async {
+    return await projectRepository.createCourse(
+      title: title,
+      description: description,
+      image: image,
+    );
+  }
+
+  Future<List<DetailCourseEntity?>?> getByIdCreator({
+    required int userId,
+  }) async {
+    return await projectRepository.getByIdCreator(
+      userId: userId,
+    );
+  }
+
   Future<UserInfoEntity?> getMyUserInfo() async {
     return await projectRepository.getMyUserInfo();
+  }
+
+  Future<void> updateCourse({
+    int? id,
+    String? title,
+    String? description,
+    html.File? image,
+  }) async {
+    return await projectRepository.updateCourse(
+      id: id,
+      title: title,
+      description: description,
+      image: image,
+    );
+  }
+
+  Future<LessonEntity?> getModuleById({
+    required int moduleId,
+  }) async {
+    return await projectRepository.getModuleById(
+      moduleId: moduleId,
+    );
+  }
+
+  Future<void> updateModule({
+    int? id,
+    String? title,
+    String? description,
+    String? videoUrl,
+    html.File? image,
+  }) async {
+    return await projectRepository.updateModule(
+      id: id,
+      title: title,
+      description: description,
+      videoUrl: videoUrl,
+      image: image,
+    );
+  }
+
+  Future<void> createModule({
+    int? courseId,
+    String? title,
+    String? description,
+    String? videoUrl,
+    html.File? image,
+  }) async {
+    return await projectRepository.createModule(
+      id: courseId,
+      title: title,
+      description: description,
+      videoUrl: videoUrl,
+      image: image,
+    );
   }
 }

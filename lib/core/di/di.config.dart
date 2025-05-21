@@ -26,10 +26,16 @@ import 'package:test_web_project/feature/all_courses_page/bloc/all_courses_page_
     as _i613;
 import 'package:test_web_project/feature/auth_page/bloc/auth_page_bloc.dart'
     as _i557;
+import 'package:test_web_project/feature/create_course_page/bloc/create_course_page_bloc.dart'
+    as _i872;
+import 'package:test_web_project/feature/create_module_page/bloc/create_module_page_bloc.dart'
+    as _i700;
 import 'package:test_web_project/feature/detail_course_page/bloc/detail_course_page_bloc.dart'
     as _i602;
 import 'package:test_web_project/feature/favourites_courses_page/bloc/favourites_courses_page_bloc.dart'
     as _i311;
+import 'package:test_web_project/feature/my_courses_page/bloc/my_courses_page_bloc.dart'
+    as _i134;
 import 'package:test_web_project/feature/profile_page/bloc/profile_page_bloc.dart'
     as _i475;
 
@@ -56,10 +62,16 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i613.AllCoursesPageBloc(gh<_i815.ProjectUseCase>()));
     gh.lazySingleton<_i557.AuthPageBloc>(
         () => _i557.AuthPageBloc(gh<_i815.ProjectUseCase>()));
+    gh.lazySingleton<_i872.CreateCoursePageBloc>(
+        () => _i872.CreateCoursePageBloc(gh<_i815.ProjectUseCase>()));
+    gh.lazySingleton<_i700.CreateModulePageBloc>(
+        () => _i700.CreateModulePageBloc(gh<_i815.ProjectUseCase>()));
     gh.lazySingleton<_i602.DetailCoursePageBloc>(
         () => _i602.DetailCoursePageBloc(gh<_i815.ProjectUseCase>()));
     gh.lazySingleton<_i311.FavouritesCoursesPageBloc>(
         () => _i311.FavouritesCoursesPageBloc(gh<_i815.ProjectUseCase>()));
+    gh.lazySingleton<_i134.MyCoursesPageBloc>(
+        () => _i134.MyCoursesPageBloc(gh<_i815.ProjectUseCase>()));
     gh.lazySingleton<_i475.ProfilePageBloc>(
         () => _i475.ProfilePageBloc(gh<_i815.ProjectUseCase>()));
     return this;

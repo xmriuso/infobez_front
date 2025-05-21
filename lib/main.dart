@@ -9,7 +9,10 @@ import 'core/theme/theme.dart';
 import 'feature/all_courses_page/bloc/all_courses_page_bloc.dart';
 import 'feature/app/routing/routing.dart';
 import 'feature/auth_page/bloc/auth_page_bloc.dart';
+import 'feature/create_course_page/bloc/create_course_page_bloc.dart';
+import 'feature/create_module_page/bloc/create_module_page_bloc.dart';
 import 'feature/favourites_courses_page/bloc/favourites_courses_page_bloc.dart';
+import 'feature/my_courses_page/bloc/my_courses_page_bloc.dart';
 import 'feature/profile_page/bloc/profile_page_bloc.dart';
 
 void main() {
@@ -51,6 +54,15 @@ class _MyAppState extends State<MyApp> {
         ),
         BlocProvider.value(
           value: getIt<ProfilePageBloc>(),
+        ),
+        BlocProvider.value(
+          value: getIt<CreateCoursePageBloc>(),
+        ),
+        BlocProvider.value(
+          value: getIt<MyCoursesPageBloc>(),
+        ),
+        BlocProvider.value(
+          value: getIt<CreateModulePageBloc>(),
         ),
       ],
       child: MaterialApp.router(

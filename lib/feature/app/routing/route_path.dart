@@ -11,5 +11,7 @@ abstract class RoutePath {
   static const favouriteDetailCoursePage = 'favouriteDetailCoursePage';
   static const favouriteDetailModulePage = 'favouriteDetailModulePage';
 
-
+  static const myCoursesPage = '/myCoursesPage';
+  static const createCoursePage = 'createCoursePage';
+  static const createModulePage = 'createModulePage';
 }

@@ -31,7 +31,7 @@ class ApiClient {
         },
         onError: (DioException error, handler) async {
           if (error.response?.statusCode == 401 &&
-              !error.requestOptions.path.contains('/auth/refresh')) {
+              !error.requestOptions.path.contains('auth/refresh')) {
             final refreshed = await refreshToken();
             if (refreshed) {
               final newToken = html.window.localStorage['access_token'];
@@ -40,7 +40,7 @@ class ApiClient {
               final cloneReq = await dio.fetch(opts);
               return handler.resolve(cloneReq);
             } else {
-              router.router.goNamed(RoutePath.authPage);
+              router.router.go(RoutePath.authPage);
               // final context = navigatorKey.currentContext;
               // if (context != null) {
               //   GoRouter.of(context).go(RoutePath.authPage);

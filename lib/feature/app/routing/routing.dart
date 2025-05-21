@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:test_web_project/feature/app/init_page/init_page.dart';
 import 'package:test_web_project/feature/app/routing/route_path.dart';
+import 'package:test_web_project/feature/create_course_page/page/create_course_page.dart';
 import 'package:test_web_project/feature/detail_module_page/page/detail_module_page.dart';
 
 import '../../all_courses_page/page/all_courses_page.dart';
 import '../../auth_page/page/auth_page.dart';
+import '../../create_module_page/page/create_module_page.dart';
 import '../../detail_course_page/page/detail_course_page.dart';
 import '../../favourites_courses_page/page/favourites_courses_page.dart';
+import '../../my_courses_page/page/my_courses_page.dart';
 import '../../profile_page/page/profile_page.dart';
 import 'custom_navigation_bar.dart';
 
-final GlobalKey<NavigatorState> _allCoursesKey = GlobalKey<NavigatorState>();
-final GlobalKey<NavigatorState> _favouritesKey = GlobalKey<NavigatorState>();
-final GlobalKey<NavigatorState> _profileKey = GlobalKey<NavigatorState>();
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 final List<StatefulShellBranch> _bottomNavBranches = <StatefulShellBranch>[
@@ -76,6 +76,46 @@ final List<StatefulShellBranch> _bottomNavBranches = <StatefulShellBranch>[
               ],
             ),
           ]),
+    ],
+  ),
+  StatefulShellBranch(
+    //navigatorKey: _profileKey,
+    //restorationScopeId: 'profile',
+    routes: [
+      GoRoute(
+        path: RoutePath.myCoursesPage,
+        name: RoutePath.myCoursesPage,
+        builder: (context, state) {
+          return MyCoursesPage();
+        },
+        routes: [
+          GoRoute(
+            path: '${RoutePath.createCoursePage}/:courseId',
+            name: RoutePath.createCoursePage,
+            builder: (context, state) {
+              final courseId = int.tryParse(state.pathParameters['courseId']!);
+              return CreateCoursePage(courseId: courseId);
+            },
+            routes: [
+              GoRoute(
+                path: '${RoutePath.createModulePage}/:moduleId',
+                name: RoutePath.createModulePage,
+                builder: (context, state) {
+                  final moduleId =
+                      int.tryParse(state.pathParameters['moduleId']!);
+                  final courseId =
+                      int.tryParse(state.pathParameters['courseId']!);
+
+                  return CreateModulePage(
+                    moduleId: moduleId ?? 0,
+                    courseId: courseId,
+                  );
+                },
+              ),
+            ],
+          ),
+        ],
+      ),
     ],
   ),
   StatefulShellBranch(

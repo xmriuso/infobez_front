@@ -80,6 +80,17 @@ class CustomNavigationBar extends StatelessWidget {
                     }
                   },
                 ),
+                const SizedBox(width: 30),
+                TopBarItem(
+                    title: 'Мои курсы',
+                    isSelected: index == 2,
+                    onTap: () {
+                      if (child.currentIndex == 2) {
+                        child.goBranch(2, initialLocation: true);
+                      } else {
+                        child.goBranch(2);
+                      }
+                    }),
                 const Spacer(),
                 NavIconButton(),
               ],

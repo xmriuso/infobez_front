@@ -40,6 +40,36 @@ class ApiService implements Api {
   }
 
   @override
+  Future<List<DetailCourseModel?>?> getByIdCreator({
+    required int userId,
+  }) async {
+    final response = await _apiClient.dio.get(
+      'courses/getByIdCreator/$userId',
+    );
+
+    if (response.data != null) {
+      final list = List<DetailCourseModel?>.from(
+          response.data.map((x) => DetailCourseModel.fromJson(x)));
+      return list;
+    }
+    return null;
+  }
+
+  @override
+  Future<LessonModel?> getModuleById({
+    required int moduleId,
+  }) async {
+    final response = await _apiClient.dio.get(
+      'modules/getById/$moduleId',
+    );
+
+    if (response.data != null) {
+      return LessonModel.fromJson(response.data);
+    }
+    return null;
+  }
+
+  @override
   Future<DetailCourseModel?> getDetailCourse({
     required int idCourse,
   }) async {
@@ -132,6 +162,152 @@ class ApiService implements Api {
       //     'Content-Type': 'multipart/form-data',
       //   },
       // ),
+    );
+  }
+
+  @override
+  Future<void> createCourse({
+    String? title,
+    String? description,
+    html.File? image,
+  }) async {
+    FormData? formData;
+
+    if (image != null) {
+      final reader = html.FileReader();
+      reader.readAsArrayBuffer(image);
+      await reader.onLoad.first;
+      final bytes = reader.result as Uint8List;
+
+      formData = FormData.fromMap({
+        'image': MultipartFile.fromBytes(
+          bytes,
+          filename: image.name,
+          contentType: DioMediaType.parse('image/jpeg'),
+        ),
+      });
+    }
+
+    await _apiClient.dio.post(
+      'courses/create',
+      data: formData,
+      queryParameters: {
+        if (title != null && title != '') 'title': title,
+        if (description != null && description != '')
+          'description': description,
+      },
+    );
+  }
+
+  @override
+  Future<void> createModule({
+    int? id,
+    String? title,
+    String? description,
+    String? videoUrl,
+    html.File? image,
+  }) async {
+    FormData? formData;
+
+    if (image != null) {
+      final reader = html.FileReader();
+      reader.readAsArrayBuffer(image);
+      await reader.onLoad.first;
+      final bytes = reader.result as Uint8List;
+
+      formData = FormData.fromMap({
+        'image': MultipartFile.fromBytes(
+          bytes,
+          filename: image.name,
+          contentType: DioMediaType.parse('image/jpeg'),
+        ),
+      });
+    }
+
+    await _apiClient.dio.post(
+      'modules/create',
+      data: formData,
+      queryParameters: {
+        if (id != null) 'course_id': id,
+        if (title != null && title != '') 'title': title,
+        if (description != null && description != '')
+          'description': description,
+        if (videoUrl != null && videoUrl != '') 'video_URL': videoUrl,
+      },
+    );
+  }
+
+  @override
+  Future<void> updateCourse({
+    int? id,
+    String? title,
+    String? description,
+    html.File? image,
+  }) async {
+    FormData? formData;
+
+    if (image != null) {
+      final reader = html.FileReader();
+      reader.readAsArrayBuffer(image);
+      await reader.onLoad.first;
+      final bytes = reader.result as Uint8List;
+
+      formData = FormData.fromMap({
+        'image': MultipartFile.fromBytes(
+          bytes,
+          filename: image.name,
+          contentType: DioMediaType.parse('image/jpeg'),
+        ),
+      });
+    }
+
+    await _apiClient.dio.patch(
+      'courses/updateById/{id_course}',
+      data: formData,
+      queryParameters: {
+        if (id != null) 'id': id,
+        if (title != null && title != '') 'title': title,
+        if (description != null && description != '')
+          'description': description,
+      },
+    );
+  }
+
+  @override
+  Future<void> updateModule({
+    int? id,
+    String? title,
+    String? description,
+    String? videoUrl,
+    html.File? image,
+  }) async {
+    FormData? formData;
+
+    if (image != null) {
+      final reader = html.FileReader();
+      reader.readAsArrayBuffer(image);
+      await reader.onLoad.first;
+      final bytes = reader.result as Uint8List;
+
+      formData = FormData.fromMap({
+        'image': MultipartFile.fromBytes(
+          bytes,
+          filename: image.name,
+          contentType: DioMediaType.parse('image/jpeg'),
+        ),
+      });
+    }
+
+    await _apiClient.dio.patch(
+      'modules/updateById/{id_module}',
+      data: formData,
+      queryParameters: {
+        if (id != null) 'id': id,
+        if (title != null && title != '') 'title': title,
+        if (description != null && description != '')
+          'description': description,
+        if (videoUrl != null && videoUrl != '') 'video_url': videoUrl,
+      },
     );
   }
 
