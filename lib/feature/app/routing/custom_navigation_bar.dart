@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:test_web_project/core/di/di.dart';
 import 'package:test_web_project/core/resourses/images.dart';
 import 'package:test_web_project/core/theme/app_colors.dart';
 import 'package:test_web_project/feature/app/routing/route_path.dart';
 import 'package:test_web_project/main.dart';
 
 import '../../../core/theme/typography.dart';
+import '../../auth_page/bloc/auth_page_bloc.dart';
 import '../../favourites_courses_page/bloc/favourites_courses_page_bloc.dart';
 
 class CustomNavigationBar extends StatelessWidget {
@@ -59,7 +61,7 @@ class CustomNavigationBar extends StatelessWidget {
                 ),
                 const SizedBox(width: 30),
                 TopBarItem(
-                  title: 'Мои курсы',
+                  title: 'Избранное',
                   isSelected: index == 1,
                   onTap: () {
                     if (child.currentIndex == 1) {
@@ -149,11 +151,6 @@ class _NavIconButtonState extends State<NavIconButton> {
                         onPressed: () => _navigateToProfile(context),
                       ),
                       _buildMenuButton(
-                        icon: Icons.delete,
-                        label: 'Корзина',
-                        onPressed: () => null,
-                      ),
-                      _buildMenuButton(
                         icon: Icons.exit_to_app,
                         label: 'Выйти',
                         onPressed: () => _logout(context),
@@ -218,8 +215,7 @@ class _NavIconButtonState extends State<NavIconButton> {
           ),
           TextButton(
             onPressed: () {
-              Navigator.pop(ctx);
-              context.go(RoutePath.authPage);
+              getIt.get<AuthPageBloc>().add(LogOutEvent());
             },
             child: Text('Выйти', style: TextStyle(color: Colors.red)),
           ),

@@ -6,12 +6,15 @@ import 'package:injectable/injectable.dart';
 import 'package:test_web_project/core/api_service/domain/entities/detail_course_entity.dart';
 import 'package:test_web_project/core/api_service/domain/entities/modules_by_id_entity.dart';
 import 'package:test_web_project/core/di/di.dart';
+import 'package:test_web_project/main.dart';
 
 import '../../../core/api_client/api_client.dart';
 import '../../../core/api_service/domain/entities/all_courses_entity.dart';
 import '../../../core/api_service/domain/usecases/project_usecase.dart';
 
 import 'dart:typed_data';
+
+import '../../app/routing/route_path.dart';
 
 part 'auth_page_event.dart';
 
@@ -25,12 +28,12 @@ class AuthPageBloc extends Bloc<AuthPageEvent, AuthPageState> {
     on<LoginEvent>(_onLoginEvent);
     on<RegisterEvent>(_onRegisterEvent);
     on<CheckAuthEvent>(_onCheckAuthEvent);
+    on<LogOutEvent>(_onLogOutEvent);
   }
 
   Future<void> _onCheckAuthEvent(
       CheckAuthEvent event, Emitter<AuthPageState> emit) async {
     final bool = await getIt.get<ApiClient>().refreshToken();
-    print('123421342314 $bool');
     if (bool) {
       emit(
         AuthSuccessState(),
@@ -49,9 +52,17 @@ class AuthPageBloc extends Bloc<AuthPageEvent, AuthPageState> {
       emit(
         AuthSuccessState(),
       );
+      router.router.goNamed(RoutePath.allCoursesPage);
     } catch (e) {
       emit(AuthErrorState());
     }
+  }
+
+  Future<void> _onLogOutEvent(
+      LogOutEvent event, Emitter<AuthPageState> emit) async {
+    ApiClient.deleteToken();
+    emit(AuthInitial());
+    router.router.go(RoutePath.authPage);
   }
 
   Future<void> _onRegisterEvent(
@@ -64,7 +75,7 @@ class AuthPageBloc extends Bloc<AuthPageEvent, AuthPageState> {
         password: event.password,
       );
       emit(
-        AuthSuccessState(),
+        SuccessRegisterState(),
       );
     } catch (e) {
       emit(AuthErrorState());

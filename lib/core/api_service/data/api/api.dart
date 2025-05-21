@@ -4,6 +4,8 @@ import 'package:test_web_project/core/api_service/data/models/detail_course_mode
 import 'package:test_web_project/core/api_service/data/models/modules_by_id_model.dart';
 
 import '../models/all_courses_model.dart';
+import '../models/user_info_model.dart';
+import 'dart:html' as html;
 
 abstract class Api {
   Future<AllCoursesModel?> getAllCourses({
@@ -33,5 +35,14 @@ abstract class Api {
   Future<void> login({
     required String username,
     required String password,
+  });
+
+  Future<UserInfoModel?> getMyUserInfo();
+
+  Future<void> userUpdate({
+    String? name,
+    String? email,
+    String? password,
+    html.File? image,
   });
 }

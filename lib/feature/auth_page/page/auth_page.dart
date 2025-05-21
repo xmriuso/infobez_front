@@ -57,17 +57,21 @@ class _AuthPageState extends State<AuthPage> {
               children: [
                 !loginOrRegister ? AuthWidget() : RegisterWidget(),
                 const SizedBox(height: 36),
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      loginOrRegister = !loginOrRegister;
-                    });
-                  },
-                  child: Text(
-                    'Register',
-                    style: AppTypography.font18RegularZillaSlab.copyWith(
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.white,
+                Flexible(
+                  child: Center(
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          loginOrRegister = !loginOrRegister;
+                        });
+                      },
+                      child: Text(
+                        loginOrRegister ? 'Авторизация' : 'Регистрация',
+                        style: AppTypography.font18RegularZillaSlab.copyWith(
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.white,
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -91,20 +95,15 @@ class _AuthWidgetState extends State<AuthWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AuthPageBloc, AuthPageState>(
-      listener: (context, state) {
-        if (state is AuthSuccessState) {
-          context.go(RoutePath.allCoursesPage);
-        }
-      },
+    return BlocBuilder<AuthPageBloc, AuthPageState>(
       builder: (context, state) {
         return Center(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 46, vertical: 50),
+            padding: const EdgeInsets.only(left: 46, top: 50, right: 46),
             child: Column(
               children: [
                 Text(
-                  'Login',
+                  'Авторизация',
                   style: AppTypography.font48RegularZillaSlab.copyWith(
                     fontWeight: FontWeight.w700,
                     color: AppColors.white,
@@ -113,18 +112,19 @@ class _AuthWidgetState extends State<AuthWidget> {
                 const SizedBox(height: 35),
                 AuthTextField(
                   controller: loginController,
-                  hintText: 'Email',
+                  hintText: 'Почта',
                   icon: SvgIcons.iconUser,
                 ),
                 const SizedBox(height: 35),
                 AuthTextField(
+                  hideText: true,
                   controller: passwordController,
-                  hintText: 'Password',
+                  hintText: 'Пароль',
                   icon: SvgIcons.iconLockLocked,
                 ),
-                const SizedBox(height: 18),
+                const SizedBox(height: 35),
                 AppButtonWidget(
-                  name: 'Login',
+                  name: 'Войти',
                   onTap: () {
                     if (loginController.text.isNotEmpty &&
                         passwordController.text.isNotEmpty) {
@@ -165,7 +165,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
         return lastContext is AuthLoadingState;
       },
       listener: (context, state) {
-        if (state is AuthSuccessState) {
+        if (state is SuccessRegisterState) {
           showDialog(
               context: context,
               builder: (BuildContext context) {
@@ -178,6 +178,12 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                   ),
                 );
               });
+          context.read<AuthPageBloc>().add(
+                LoginEvent(
+                  username: emailController.text,
+                  password: passwordController.text,
+                ),
+              );
         }
         if (state is AuthErrorState) {
           showDialog(
@@ -197,11 +203,11 @@ class _RegisterWidgetState extends State<RegisterWidget> {
       builder: (context, state) {
         return Center(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 46, vertical: 50),
+            padding: const EdgeInsets.only(left: 46, top: 50, right: 46),
             child: Column(
               children: [
                 Text(
-                  'Login',
+                  'Регистрация',
                   style: AppTypography.font48RegularZillaSlab.copyWith(
                     fontWeight: FontWeight.w700,
                     color: AppColors.white,
@@ -210,24 +216,25 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                 const SizedBox(height: 35),
                 AuthTextField(
                   controller: userNameController,
-                  hintText: 'Username',
+                  hintText: 'Имя пользователя',
                   icon: SvgIcons.iconUser,
                 ),
                 const SizedBox(height: 35),
                 AuthTextField(
+                  hideText: true,
                   controller: passwordController,
-                  hintText: 'Password',
+                  hintText: 'Пароль',
                   icon: SvgIcons.iconLockLocked,
                 ),
                 const SizedBox(height: 45),
                 AuthTextField(
                   controller: emailController,
-                  hintText: 'Email',
+                  hintText: 'Почта',
                   icon: SvgIcons.iconLockLocked,
                 ),
-                const SizedBox(height: 18),
+                const SizedBox(height: 35),
                 AppButtonWidget(
-                  name: 'Register',
+                  name: 'Регистрация',
                   onTap: () {
                     if (userNameController.text.isNotEmpty &&
                         passwordController.text.isNotEmpty &&

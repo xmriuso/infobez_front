@@ -4,6 +4,8 @@ import 'package:test_web_project/core/api_service/domain/entities/detail_course_
 import 'package:test_web_project/core/api_service/domain/entities/modules_by_id_entity.dart';
 
 import '../entities/all_courses_entity.dart';
+import '../entities/user_info_entity.dart';
+import 'dart:html' as html;
 
 abstract class ProjectRepository {
   Future<AllCoursesEntity?> getAllCourses({
@@ -33,5 +35,14 @@ abstract class ProjectRepository {
   Future<void> login({
     required String username,
     required String password,
+  });
+
+  Future<UserInfoEntity?> getMyUserInfo();
+
+  Future<void> userUpdate({
+    String? name,
+    String? email,
+    String? password,
+    html.File? image,
   });
 }

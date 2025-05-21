@@ -4,9 +4,11 @@ import 'package:injectable/injectable.dart';
 import 'package:test_web_project/core/api_service/data/models/detail_course_model.dart';
 import 'package:test_web_project/core/api_service/domain/entities/detail_course_entity.dart';
 import 'package:test_web_project/core/api_service/domain/entities/modules_by_id_entity.dart';
+import 'package:test_web_project/core/api_service/domain/entities/user_info_entity.dart';
 import '../../domain/entities/all_courses_entity.dart';
 import '../../domain/repository/project_repository.dart';
 import '../api/service/api_service.dart';
+import 'dart:html' as html;
 
 @LazySingleton(as: ProjectRepository)
 class ProjectRepositoryImpl extends ProjectRepository {
@@ -74,6 +76,26 @@ class ProjectRepositoryImpl extends ProjectRepository {
     await apiService.login(
       username: username,
       password: password,
+    );
+  }
+
+  @override
+  Future<UserInfoEntity?> getMyUserInfo() async {
+    return await apiService.getMyUserInfo();
+  }
+
+  @override
+  Future<void> userUpdate({
+    String? name,
+    String? email,
+    String? password,
+    html.File? image,
+  }) async {
+    return await apiService.userUpdate(
+      name: name,
+      email: email,
+      password: password,
+      image: image,
     );
   }
 }

@@ -6,7 +6,9 @@ import 'package:test_web_project/core/api_service/domain/entities/modules_by_id_
 
 import '../entities/all_courses_entity.dart';
 import '../entities/detail_course_entity.dart';
+import '../entities/user_info_entity.dart';
 import '../repository/project_repository.dart';
+import 'dart:html' as html;
 
 @lazySingleton
 class ProjectUseCase {
@@ -83,5 +85,23 @@ class ProjectUseCase {
       password: password,
     );
     return;
+  }
+
+  Future<void> userUpdate({
+    String? name,
+    String? email,
+    String? password,
+    html.File? image,
+  }) async {
+    return await projectRepository.userUpdate(
+      name: name,
+      email: email,
+      password: password,
+      image: image,
+    );
+  }
+
+  Future<UserInfoEntity?> getMyUserInfo() async {
+    return await projectRepository.getMyUserInfo();
   }
 }

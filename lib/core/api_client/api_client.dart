@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
 import 'package:test_web_project/feature/app/routing/route_path.dart';
+import 'package:test_web_project/main.dart';
 
 import '../../feature/app/routing/routing.dart';
 
@@ -39,10 +40,11 @@ class ApiClient {
               final cloneReq = await dio.fetch(opts);
               return handler.resolve(cloneReq);
             } else {
-              final context = navigatorKey.currentContext;
-              if (context != null) {
-                GoRouter.of(context).go(RoutePath.authPage);
-              }
+              router.router.goNamed(RoutePath.authPage);
+              // final context = navigatorKey.currentContext;
+              // if (context != null) {
+              //   GoRouter.of(context).go(RoutePath.authPage);
+              // }
             }
           }
           return handler.next(error);
@@ -55,6 +57,11 @@ class ApiClient {
         error: true,
       ),
     ]);
+  }
+
+  static void deleteToken() {
+    html.window.localStorage.remove('access_token');
+    html.document.cookie = 'refresh_token=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
   }
 
   Future<bool> refreshToken() async {

@@ -7,7 +7,9 @@ import 'package:test_web_project/core/api_service/data/models/modules_by_id_mode
 import '../../../../api_client/api_client.dart';
 import '../../models/all_courses_model.dart';
 import 'dart:typed_data';
-import 'dart:html' as html; // Используем dart:html для работы с DOM
+import 'dart:html' as html;
+
+import '../../models/user_info_model.dart';
 
 @lazySingleton
 class ApiService implements Api {
@@ -52,6 +54,17 @@ class ApiService implements Api {
   }
 
   @override
+  Future<UserInfoModel?> getMyUserInfo() async {
+    final response = await _apiClient.dio.get(
+      'users/me',
+    );
+    if (response.data != null) {
+      return UserInfoModel.fromJson(response.data);
+    }
+    return null;
+  }
+
+  @override
   Future<AllLessonsModel?> getModulesByCourceId({
     required int idCourse,
   }) async {
@@ -80,6 +93,46 @@ class ApiService implements Api {
       },
     );
     return;
+  }
+
+  @override
+  Future<void> userUpdate({
+    String? name,
+    String? email,
+    String? password,
+    html.File? image, // <-- файл изображения
+  }) async {
+    FormData? formData;
+
+    if (image != null) {
+      final reader = html.FileReader();
+      reader.readAsArrayBuffer(image);
+      await reader.onLoad.first;
+      final bytes = reader.result as Uint8List;
+
+      formData = FormData.fromMap({
+        'image': MultipartFile.fromBytes(
+          bytes,
+          filename: image.name,
+          contentType: DioMediaType.parse('image/jpeg'),
+        ),
+      });
+    }
+
+    await _apiClient.dio.patch(
+      'users/update',
+      data: formData,
+      queryParameters: {
+        if (name != null && name != '') 'name': name,
+        if (email != null && email != '') 'email': email,
+        if (password != null && password != '') 'password': password,
+      },
+      // options: Options(
+      //   headers: {
+      //     'Content-Type': 'multipart/form-data',
+      //   },
+      // ),
+    );
   }
 
   @override

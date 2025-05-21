@@ -10,6 +10,7 @@ import 'feature/all_courses_page/bloc/all_courses_page_bloc.dart';
 import 'feature/app/routing/routing.dart';
 import 'feature/auth_page/bloc/auth_page_bloc.dart';
 import 'feature/favourites_courses_page/bloc/favourites_courses_page_bloc.dart';
+import 'feature/profile_page/bloc/profile_page_bloc.dart';
 
 void main() {
   setupDependencies();
@@ -47,6 +48,9 @@ class _MyAppState extends State<MyApp> {
         ),
         BlocProvider.value(
           value: getIt<AuthPageBloc>(),
+        ),
+        BlocProvider.value(
+          value: getIt<ProfilePageBloc>(),
         ),
       ],
       child: MaterialApp.router(

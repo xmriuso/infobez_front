@@ -8,12 +8,14 @@ class AuthTextField extends StatelessWidget {
   final String hintText;
   final String? icon;
   final TextEditingController? controller;
+  final bool? hideText;
 
   const AuthTextField({
     super.key,
     required this.hintText,
     this.icon,
     this.controller,
+    this.hideText,
   });
 
   @override
@@ -34,6 +36,7 @@ class AuthTextField extends StatelessWidget {
           children: [
             Expanded(
               child: TextField(
+                obscureText: hideText ?? false,
                 controller: controller,
                 style: AppTypography.font18RegularZillaSlab.copyWith(
                   color: AppColors.white,

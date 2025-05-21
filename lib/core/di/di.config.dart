@@ -30,6 +30,8 @@ import 'package:test_web_project/feature/detail_course_page/bloc/detail_course_p
     as _i602;
 import 'package:test_web_project/feature/favourites_courses_page/bloc/favourites_courses_page_bloc.dart'
     as _i311;
+import 'package:test_web_project/feature/profile_page/bloc/profile_page_bloc.dart'
+    as _i475;
 
 extension GetItInjectableX on _i174.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -52,12 +54,14 @@ extension GetItInjectableX on _i174.GetIt {
         _i815.ProjectUseCase(projectRepository: gh<_i774.ProjectRepository>()));
     gh.lazySingleton<_i613.AllCoursesPageBloc>(
         () => _i613.AllCoursesPageBloc(gh<_i815.ProjectUseCase>()));
+    gh.lazySingleton<_i557.AuthPageBloc>(
+        () => _i557.AuthPageBloc(gh<_i815.ProjectUseCase>()));
     gh.lazySingleton<_i602.DetailCoursePageBloc>(
         () => _i602.DetailCoursePageBloc(gh<_i815.ProjectUseCase>()));
     gh.lazySingleton<_i311.FavouritesCoursesPageBloc>(
         () => _i311.FavouritesCoursesPageBloc(gh<_i815.ProjectUseCase>()));
-    gh.lazySingleton<_i557.AuthPageBloc>(
-        () => _i557.AuthPageBloc(gh<_i815.ProjectUseCase>()));
+    gh.lazySingleton<_i475.ProfilePageBloc>(
+        () => _i475.ProfilePageBloc(gh<_i815.ProjectUseCase>()));
     return this;
   }
 }

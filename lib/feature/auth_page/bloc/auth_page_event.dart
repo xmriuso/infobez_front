@@ -8,8 +8,11 @@ sealed class AuthPageEvent extends Equatable {
 }
 
 class CheckAuthEvent extends AuthPageEvent {
-
   const CheckAuthEvent();
+}
+
+class LogOutEvent extends AuthPageEvent {
+  const LogOutEvent();
 }
 
 class LoginEvent extends AuthPageEvent {
