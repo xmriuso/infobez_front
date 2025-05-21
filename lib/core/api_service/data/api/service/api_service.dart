@@ -27,7 +27,7 @@ class ApiService implements Api {
       'courses/getPageByDescription/',
       queryParameters: {
         'number_page': 1,
-        'quantity_on_page': 10,
+        'quantity_on_page': 1000,
         if (search != null) 'description': search,
         //if (numberPage != null) 'number_page': numberPage,
         //if (quantity != null)'quantity_on_page': quantity,
