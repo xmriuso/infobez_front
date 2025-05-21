@@ -216,49 +216,38 @@ class _DetailModulePageState extends State<DetailModulePage> {
   }
 }
 
-class VideoWidget extends StatefulWidget {
+class VideoWidget extends StatelessWidget {
   final String? url;
 
   const VideoWidget({required this.url, super.key});
 
   @override
-  State<VideoWidget> createState() => _VideoWidgetState();
-}
-
-class _VideoWidgetState extends State<VideoWidget> {
-  late final String? videoId;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    videoId = _extractVideoId(widget.url);
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final videoId = _extractVideoId(url);
     if (videoId != null) {
-      final String viewType = 'youtube-video-$videoId';
+      final String viewType = 'youtube-video-${UniqueKey()}'; // 🔥 ключ всегда новый
+
       // ignore: undefined_prefixed_name
       ui.platformViewRegistry.registerViewFactory(
         viewType,
-        (int viewId) {
+            (int viewId) {
           final iframe = IFrameElement()
             ..width = '100%'
             ..height = '100%'
-            ..src = 'https://www.youtube.com/embed/$videoId'
+            ..src = 'https://www.youtube.com/embed/$videoId?autoplay=1'
             ..style.border = 'none'
-            ..style.pointerEvents =
-                'auto' // важное изменение для блокировки прокрутки
-            ..style.overflow = 'auto'; // добавляем прокрутку
+            ..style.pointerEvents = 'auto'
+            ..style.overflow = 'auto';
           return iframe;
         },
       );
+
       return HtmlElementView(
+        key: ValueKey(videoId), // 👈 ключ чтобы Flutter знал, что это другой виджет
         viewType: viewType,
       );
     } else {
-      return Text('Ошибка загрузки');
+      return const Text('Ошибка загрузки видео');
     }
   }
 
