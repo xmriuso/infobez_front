@@ -5,6 +5,7 @@ import 'package:test_web_project/core/theme/app_colors.dart';
 import 'package:test_web_project/core/theme/typography.dart';
 import 'package:test_web_project/feature/app/routing/route_path.dart';
 
+import '../../create_course_page/bloc/create_course_page_bloc.dart';
 import '../../my_courses_page/page/my_courses_page.dart';
 import 'dart:html' as html;
 import 'dart:typed_data';
@@ -55,6 +56,9 @@ class _CreateModulePage extends State<CreateModulePage> {
           _videoUrlController.text = state.detailModule?.videoUrl ?? '';
         }
         if (state is SuccessCreateState) {
+          context.read<CreateCoursePageBloc>().add(
+                LoadDetailCourseEvent(courseId: widget.courseId),
+              );
           context.goNamed(
             RoutePath.createCoursePage,
             pathParameters: {
@@ -65,7 +69,26 @@ class _CreateModulePage extends State<CreateModulePage> {
       },
       builder: (context, state) {
         if (state is DetailCourseLoadState) {
-          return const Center(child: CircularProgressIndicator());
+          return const Center(
+            child: SizedBox(
+              height: 80,
+              width: 80,
+              child: CircularProgressIndicator(
+                color: Colors.pink,
+              ),
+            ),
+          );
+        }
+        if (state is SuccessCreateState) {
+          return const Center(
+            child: SizedBox(
+              height: 80,
+              width: 80,
+              child: CircularProgressIndicator(
+                color: Colors.pink,
+              ),
+            ),
+          );
         }
         if (state is DetailCourseErrorState) {
           return const Center(child: Text('Ошибка загрузки'));

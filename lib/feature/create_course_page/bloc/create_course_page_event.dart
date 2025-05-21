@@ -15,8 +15,8 @@ class LoadDetailCourseEvent extends CreateCoursePageEvent {
   });
 }
 
-class LoadImagesEvent extends CreateCoursePageEvent {
-  const LoadImagesEvent();
+class LoadCreateCoursesImagesEvent extends CreateCoursePageEvent {
+  const LoadCreateCoursesImagesEvent();
 }
 
 class CreateCourseEvent extends CreateCoursePageEvent {

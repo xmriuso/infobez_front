@@ -5,6 +5,7 @@ import 'package:test_web_project/core/theme/app_colors.dart';
 import 'package:test_web_project/core/theme/typography.dart';
 import 'package:test_web_project/feature/app/routing/route_path.dart';
 
+import '../../my_courses_page/bloc/my_courses_page_bloc.dart';
 import '../../my_courses_page/page/my_courses_page.dart';
 import '../bloc/create_course_page_bloc.dart';
 import 'dart:html' as html;
@@ -44,26 +45,50 @@ class _DetailCoursePage extends State<CreateCoursePage> {
     final width = MediaQuery.of(context).size.width;
     return BlocConsumer<CreateCoursePageBloc, CreateCoursePageState>(
       listenWhen: (lastState, state) {
-        return lastState is! AllCoursesPageLoadedState;
+        return lastState is! CreateCoursesPageLoadedState;
       },
       listener: (context, state) {
-        if (state is AllCoursesPageLoadedState) {
+        if (state is CreateCoursesPageLoadedState) {
           _nameController.text = state.detailCourse?.title ?? '';
           _emailController.text = state.detailCourse?.description ?? '';
-          context.read<CreateCoursePageBloc>().add(LoadImagesEvent());
+          context
+              .read<CreateCoursePageBloc>()
+              .add(LoadCreateCoursesImagesEvent());
         }
-        if (state is SuccessCreateState) {
+        if (state is CreateCourseSuccessState) {
+          context.read<MyCoursesPageBloc>().add(
+                LoadMyCoursesEvent(),
+              );
           context.goNamed(RoutePath.myCoursesPage);
         }
       },
       builder: (context, state) {
-        if (state is DetailCourseLoadState) {
-          return const Center(child: CircularProgressIndicator());
+        if (state is CreateCoursesLoadState) {
+          return const Center(
+            child: SizedBox(
+              height: 80,
+              width: 80,
+              child: CircularProgressIndicator(
+                color: Colors.pink,
+              ),
+            ),
+          );
         }
-        if (state is DetailCourseErrorState) {
+        if (state is CreateCourseSuccessState) {
+          return const Center(
+            child: SizedBox(
+              height: 80,
+              width: 80,
+              child: CircularProgressIndicator(
+                color: Colors.pink,
+              ),
+            ),
+          );
+        }
+        if (state is CreateCoursesErrorState) {
           return const Center(child: Text('Ошибка загрузки'));
         }
-        if (state is AllCoursesPageLoadedState) {
+        if (state is CreateCoursesPageLoadedState) {
           return ListView(
             children: [
               Row(

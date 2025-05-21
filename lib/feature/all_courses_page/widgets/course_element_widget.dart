@@ -118,7 +118,7 @@ class _CourseElementWidgetState extends State<CourseElementWidget> {
                         children: [
                           FittedBox(
                             fit: BoxFit.fill,
-                            child: Text("Выполнено 0 из 5",
+                            child: Text(widget.title,
                                 style: TextStyle(color: Colors.white)),
                           ),
                           SizedBox(height: 4),

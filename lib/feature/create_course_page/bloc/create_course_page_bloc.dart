@@ -23,13 +23,13 @@ class CreateCoursePageBloc
   CreateCoursePageBloc(this.projectUseCase) : super(AllCoursesPageInitial()) {
     on<LoadDetailCourseEvent>(_onLoadDetailCourseEvent);
     on<CreateCourseEvent>(_onCreateCourseEvent);
-    on<LoadImagesEvent>(_onLoadImagesEvent);
+    on<LoadCreateCoursesImagesEvent>(_onLoadCreateCoursesImagesEvent);
   }
 
   Future<void> _onLoadDetailCourseEvent(
       LoadDetailCourseEvent event, Emitter<CreateCoursePageState> emit) async {
     try {
-      emit(DetailCourseLoadState());
+      emit(CreateCoursesLoadState());
       if (event.courseId != null && event.courseId != 0) {
         List<Uint8List?> buff = [];
         final detailCourse =
@@ -44,7 +44,7 @@ class CreateCoursePageBloc
         }
 
         emit(
-          AllCoursesPageLoadedState(
+          CreateCoursesPageLoadedState(
             detailCourse: detailCourse,
             modulesByCourseId: modulesByCourseId,
             imagesFiles: buff,
@@ -54,21 +54,21 @@ class CreateCoursePageBloc
         return;
       }
       emit(
-        AllCoursesPageLoadedState(
+        CreateCoursesPageLoadedState(
           detailCourse: null,
           modulesByCourseId: null,
           imagesFiles: [],
         ),
       );
     } catch (e) {
-      emit(DetailCourseErrorState());
+      emit(CreateCoursesErrorState());
     }
   }
 
   Future<void> _onCreateCourseEvent(
       CreateCourseEvent event, Emitter<CreateCoursePageState> emit) async {
     try {
-      emit(DetailCourseLoadState());
+      emit(CreateCoursesLoadState());
       if (event.courseId == 0) {
         await projectUseCase.createCourse(
           title: event.title,
@@ -76,7 +76,7 @@ class CreateCoursePageBloc
           image: event.image,
         );
         emit(
-          SuccessCreateState(),
+          CreateCourseSuccessState(),
         );
       } else {
         await projectUseCase.updateCourse(
@@ -86,19 +86,20 @@ class CreateCoursePageBloc
           image: event.image,
         );
         emit(
-          SuccessCreateState(),
+          CreateCourseSuccessState(),
         );
       }
     } catch (e) {
-      emit(DetailCourseErrorState());
+      emit(CreateCoursesErrorState());
     }
   }
 
-  Future<void> _onLoadImagesEvent(
-      LoadImagesEvent event, Emitter<CreateCoursePageState> emit) async {
+  Future<void> _onLoadCreateCoursesImagesEvent(
+      LoadCreateCoursesImagesEvent event,
+      Emitter<CreateCoursePageState> emit) async {
     List<String> images = [];
-    if (state is AllCoursesPageLoadedState) {
-      final currentState = state as AllCoursesPageLoadedState;
+    if (state is CreateCoursesPageLoadedState) {
+      final currentState = state as CreateCoursesPageLoadedState;
 
       images = currentState.modulesByCourseId?.data
               ?.map((e) => e.featuredImage?.small ?? '')
@@ -107,9 +108,9 @@ class CreateCoursePageBloc
     }
 
     for (int i = 0; i < images.length; i++) {
-      if (state is AllCoursesPageLoadedState) {
+      if (state is CreateCoursesPageLoadedState) {
         try {
-          final currentState = state as AllCoursesPageLoadedState;
+          final currentState = state as CreateCoursesPageLoadedState;
           List<Uint8List?> buff = currentState.imagesFiles;
           final currentImage =
               await projectUseCase.getImageFromString(image: images[i]);

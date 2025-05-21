@@ -69,7 +69,7 @@ class _FavouritesCoursesPageState extends State<FavouritesCoursesPage> {
                       child: CourseElementWidget(
                         courseId: course.id,
                         imageUrl: state.imagesFiles[index],
-                        title: '',
+                        title: course.title ?? '',
                         description: '',
                         onTap: () {
                           if (state.favouriteCourses[index].id != null) {

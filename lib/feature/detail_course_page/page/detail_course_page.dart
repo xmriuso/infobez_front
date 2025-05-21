@@ -43,7 +43,15 @@ class _DetailCoursePage extends State<DetailCoursePage> {
       },
       builder: (context, state) {
         if (state is DetailCourseLoadState) {
-          return const Center(child: CircularProgressIndicator());
+          return const Center(
+            child: SizedBox(
+              height: 80,
+              width: 80,
+              child: CircularProgressIndicator(
+                color: Colors.pink,
+              ),
+            ),
+          );
         }
         if (state is DetailCourseErrorState) {
           return const Center(child: Text('Ошибка загрузки'));
@@ -117,23 +125,50 @@ class _DetailCoursePage extends State<DetailCoursePage> {
                                     );
                                   },
                                   child: image != null
-                                      ? Container(
-                                          decoration: BoxDecoration(
-                                            border: Border.all(
-                                              color: AppColors.PINK101,
-                                              width: 2.0,
+                                      ? Stack(
+                                          children: [
+                                            Positioned.fill(
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                    color: AppColors.PINK101,
+                                                    width: 2.0,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(12),
+                                                ),
+                                                child: ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  child: Image.memory(
+                                                    image,
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
+                                              ),
                                             ),
-                                            borderRadius:
-                                                BorderRadius.circular(12),
-                                          ),
-                                          child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            child: Image.memory(
-                                              image,
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
+                                            Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                    left: 8,
+                                                    right: 8,
+                                                    bottom: 8,
+                                                  ),
+                                                  child: Text(
+                                                    module.title ?? '',
+                                                    style: TextStyle(
+                                                      fontSize: 12,
+                                                      color: Colors.white,
+                                                    ),
+                                                  ),
+                                                )
+                                              ],
+                                            )
+                                          ],
                                         )
                                       : const Text('Загрузка...'),
                                 );

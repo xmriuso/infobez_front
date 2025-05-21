@@ -56,7 +56,7 @@ class _AllCoursesPageState extends State<AllCoursesPage> {
                     child: CourseElementWidget(
                       courseId: state.allCourses!.data![index].id,
                       imageUrl: state.imagesFiles[index],
-                      title: '$title ${index + 1}',
+                      title: state.allCourses!.data![index].title ?? '',
                       description: '$description ${index + 1}',
                       onTap: () {
                         if (state.allCourses!.data![index].id != null) {
@@ -76,9 +76,18 @@ class _AllCoursesPageState extends State<AllCoursesPage> {
             ),
           );
         }
-
-        ///Todo: Сделать загрузку
-        return Text('Загрузка...');
+        if (state is AllCoursesLoadPage) {
+          return const Center(
+            child: SizedBox(
+              height: 80,
+              width: 80,
+              child: CircularProgressIndicator(
+                color: Colors.pink,
+              ),
+            ),
+          );
+        }
+        return SizedBox.shrink();
       },
     );
   }
